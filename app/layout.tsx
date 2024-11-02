@@ -1,7 +1,8 @@
+import NavBar from "@/components/nav-bar";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/nav-bar";
 
 const poppins = Poppins({
 	weight: ["400", "700"],
@@ -23,8 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={poppins.className}>
-				<NavBar />
-				<main className="mt-16">{children}</main>
+				<ClerkProvider>
+					<NavBar />
+					<main className="mt-16">{children}</main>
+				</ClerkProvider>
 			</body>
 		</html>
 	);

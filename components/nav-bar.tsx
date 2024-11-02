@@ -1,6 +1,8 @@
 import Image from "next/image";
 import InsLogo from "@/assets/only_logo.png";
 import { PiUserCircleLight } from "react-icons/pi";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 function NavBar() {
 	return (
@@ -16,24 +18,29 @@ function NavBar() {
 				<nav>
 					<ul className="ml-5 flex gap-5">
 						<li>
-							<a className="hover:text-primary" href="#">
+							<Link className="hover:text-primary" href="/">
 								Home
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a className="hover:text-primary" href="#">
+							<Link className="hover:text-primary" href="#">
 								About
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a className="hover:text-primary" href="#">
+							<Link className="hover:text-primary" href="#">
 								Contact Us
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</nav>
 				<div className="ml-auto">
-					<PiUserCircleLight size={30} />
+					<SignedOut>
+						<SignInButton />
+					</SignedOut>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
 				</div>
 			</div>
 		</header>
