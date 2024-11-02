@@ -1,7 +1,6 @@
-import Image from "next/image";
 import InsLogo from "@/assets/only_logo.png";
-import { PiUserCircleLight } from "react-icons/pi";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 import Link from "next/link";
 
 function NavBar() {
