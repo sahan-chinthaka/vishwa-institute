@@ -1,4 +1,5 @@
-import Link from "next/link";
+"use client";
+
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import {
@@ -8,14 +9,19 @@ import {
 	DisclosurePanel,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigation = [
-	{ name: "Home", href: "/", current: false },
-	{ name: "Classes", href: "/classes", current: false },
-	{ name: "Teachers", href: "/teachers", current: false },
+	{ name: "Classes", href: "/classes" },
+	{ name: "Teachers", href: "/teachers" },
+	{ name: "News", href: "/news" },
+	{ name: "Contact Us", href: "/contact-us" },
 ];
 
 export default function NavBar() {
+	const pathname = usePathname();
+
 	return (
 		<Disclosure as="nav" className="bg-gray-800">
 			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -37,9 +43,12 @@ export default function NavBar() {
 					</div>
 					<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 						<div className="flex shrink-0 items-center">
-							<span className="font-mono font-bold text-primary transition-colors hover:text-green-500">
+							<Link
+								href="/"
+								className="font-mono font-bold text-background transition-colors"
+							>
 								VISHWA
-							</span>
+							</Link>
 						</div>
 						<div className="hidden sm:ml-6 sm:block">
 							<div className="flex space-x-4">
@@ -47,9 +56,11 @@ export default function NavBar() {
 									<Link
 										key={item.name}
 										href={item.href}
-										aria-current={item.current ? "page" : undefined}
+										aria-current={
+											pathname.startsWith(item.href) ? "page" : undefined
+										}
 										className={cn(
-											item.current
+											pathname.startsWith(item.href)
 												? "bg-gray-900 text-white"
 												: "text-gray-300 hover:bg-gray-700 hover:text-white",
 											"rounded-md px-3 py-2 text-sm font-medium",
@@ -76,7 +87,7 @@ export default function NavBar() {
 						<div className="relative ml-3 flex justify-center">
 							<SignedOut>
 								<SignInButton>
-									<Button className="rounded bg-primary px-4 py-2 text-sm text-white transition-colors data-[active]:bg-green-500 data-[hover]:bg-green-600">
+									<Button className="rounded bg-primary px-4 py-2 text-sm text-foreground transition-colors data-[active]:bg-green-500 data-[hover]:bg-green-600">
 										Sign In
 									</Button>
 								</SignInButton>
@@ -96,9 +107,9 @@ export default function NavBar() {
 							key={item.name}
 							as={Link}
 							href={item.href}
-							aria-current={item.current ? "page" : undefined}
+							aria-current={pathname.startsWith(item.href) ? "page" : undefined}
 							className={cn(
-								item.current
+								pathname.startsWith(item.href)
 									? "bg-gray-900 text-white"
 									: "text-gray-300 hover:bg-gray-700 hover:text-white",
 								"block rounded-md px-3 py-2 text-base font-medium",
