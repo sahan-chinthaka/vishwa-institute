@@ -1,7 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	UserButton,
+	useUser,
+} from "@clerk/nextjs";
 import {
 	Button,
 	Disclosure,
@@ -17,11 +23,11 @@ const navigation = [
 	{ name: "Teachers", href: "/teachers" },
 	{ name: "News", href: "/news" },
 	{ name: "Contact Us", href: "/contact-us" },
-	{ name: "VLE", href: "/vle" },
 ];
 
 export default function NavBar() {
 	const pathname = usePathname();
+	const user = useUser();
 
 	return (
 		<Disclosure as="nav" className="bg-gray-800">
@@ -70,6 +76,22 @@ export default function NavBar() {
 										{item.name}
 									</Link>
 								))}
+								{user.isLoaded && user.isSignedIn && (
+									<Link
+										href={"/vle"}
+										aria-current={
+											pathname.startsWith("/vle") ? "page" : undefined
+										}
+										className={cn(
+											pathname.startsWith("/vle")
+												? "bg-gray-900 text-white"
+												: "text-gray-300 hover:bg-gray-700 hover:text-white",
+											"rounded-md px-3 py-2 text-sm font-medium",
+										)}
+									>
+										VLE
+									</Link>
+								)}
 							</div>
 						</div>
 					</div>
@@ -119,6 +141,21 @@ export default function NavBar() {
 							{item.name}
 						</DisclosureButton>
 					))}
+					{user.isLoaded && user.isSignedIn && (
+						<DisclosureButton
+							as={Link}
+							href={"/vle"}
+							aria-current={pathname.startsWith("/vle") ? "page" : undefined}
+							className={cn(
+								pathname.startsWith("/vle")
+									? "bg-gray-900 text-white"
+									: "text-gray-300 hover:bg-gray-700 hover:text-white",
+								"block rounded-md px-3 py-2 text-base font-medium",
+							)}
+						>
+							VLE
+						</DisclosureButton>
+					)}
 				</div>
 			</DisclosurePanel>
 		</Disclosure>
