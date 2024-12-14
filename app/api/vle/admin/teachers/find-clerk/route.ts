@@ -15,6 +15,6 @@ export async function GET(req: NextRequest) {
 
 		return NextResponse.json({ done: true, users: res.data });
 	} catch (e: any) {
-		return NextResponse.json({ done: false, error: e, message: e.message });
+		return NextResponse.json({ done: false, error: e.message });
 	}
 }
