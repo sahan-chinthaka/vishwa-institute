@@ -1,4 +1,4 @@
-import PrimaryButton from "@/components/primary-button";
+import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -35,7 +35,7 @@ async function VLEPage() {
 				</p>
 				<br />
 				<Link href="/student-register">
-					<PrimaryButton>Register Here</PrimaryButton>
+					<Button>Register Here</Button>
 				</Link>
 			</div>
 		</div>
