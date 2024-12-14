@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { TeacherForm } from "@/lib/forms";
+import { TeacherType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { SearchItem } from "./page";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { SearchItem } from "./page";
 
 function NewTeacherForm({ data }: { data: SearchItem }) {
-	const form = useForm<z.infer<typeof TeacherForm>>({
+	const form = useForm<TeacherType>({
 		resolver: zodResolver(TeacherForm),
 		defaultValues: {
 			firstName: data.firstName,
@@ -32,14 +32,14 @@ function NewTeacherForm({ data }: { data: SearchItem }) {
 	const [submitDisabled, setSubmitDisabled] = useState(false);
 	const router = useRouter();
 
-	function onSubmit(values: z.infer<typeof TeacherForm>) {
+	function onSubmit(values: TeacherType) {
 		setSubmitDisabled(true);
 		axios
 			.post("/api/vle/admin/teachers", values)
 			.then((res) => {
 				if (res.data.done) {
 					alert("Teacher created successfully!");
-					router.replace("./" + res.data.teacher._id);
+					router.replace("./" + res.data.teacher.clerkId);
 				} else setSubmitDisabled(false);
 			})
 			.catch(() => setSubmitDisabled(false));
