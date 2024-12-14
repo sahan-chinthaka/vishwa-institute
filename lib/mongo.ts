@@ -1,4 +1,3 @@
-import Teacher from "@/models/teacher";
 import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGO_DB;
@@ -21,9 +20,6 @@ async function connectMongo() {
 			bufferCommands: false,
 		};
 		cached.promise = mongoose.connect(MONGO_URI, opts);
-
-		// Addning model name just let to know Next.js development server that they are existing
-		Teacher.name;
 	}
 	try {
 		cached.connection = await cached.promise;

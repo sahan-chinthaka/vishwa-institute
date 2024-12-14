@@ -15,7 +15,7 @@ import Link from "next/link";
 async function AdminTeacherManagement() {
 	await connectMongo();
 
-	let teachers = await Teacher.find<TeacherType>();
+	const teachers = await Teacher.find<TeacherType>();
 
 	return (
 		<div className="space-y-5 p-5">

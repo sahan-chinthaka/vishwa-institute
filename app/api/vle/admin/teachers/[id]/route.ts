@@ -1,6 +1,5 @@
 import { TeacherForm } from "@/lib/forms";
 import connectMongo from "@/lib/mongo";
-import { TeacherType } from "@/lib/types";
 import Teacher from "@/models/teacher";
 import { NextRequest, NextResponse } from "next/server";
 
