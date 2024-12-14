@@ -7,16 +7,15 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { TeacherForm } from "@/lib/forms";
 import connectMongo from "@/lib/mongo";
+import { TeacherType } from "@/lib/types";
 import Teacher from "@/models/teacher";
 import Link from "next/link";
-import { z } from "zod";
 
 async function AdminTeacherManagement() {
 	await connectMongo();
 
-	let teachers = await Teacher.find<z.infer<typeof TeacherForm>>();
+	let teachers = await Teacher.find<TeacherType>();
 
 	return (
 		<div className="space-y-5 p-5">

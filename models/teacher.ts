@@ -1,8 +1,7 @@
-import { TeacherForm } from "@/lib/forms";
+import { TeacherType } from "@/lib/types";
 import mongoose from "mongoose";
-import { z } from "zod";
 
-const teacherSchema = new mongoose.Schema<z.infer<typeof TeacherForm>>({
+const teacherSchema = new mongoose.Schema<TeacherType>({
 	firstName: String,
 	lastName: {
 		type: String,
