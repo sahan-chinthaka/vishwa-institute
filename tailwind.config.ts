@@ -15,6 +15,15 @@ const config: Config = {
 				primary: {
 					DEFAULT: "rgba(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
+					green: {
+						50: "#f0fdf4", // Light green for footer background
+						600: "#16a34a", // Green for buttons and icons
+						700: "#15803d", // Darker green for hover effects
+					},
+					gray: {
+						700: "#374151", // Text gray color
+						300: "#d1d5db", // Light gray for borders
+					},
 				},
 				card: {
 					DEFAULT: "hsl(var(--card))",
