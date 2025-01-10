@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; 
 import Footer from "../../components/footer";
+import Link from "next/link"; 
 import Girl from "../../assets/girl.jpeg";
 import Boy from "../../assets/boy.jpeg";
 
@@ -36,7 +37,6 @@ export default function TeachersPage() {
   const [showAll, setShowAll] = useState(false);
   const [nameFilter, setNameFilter] = useState("");  
   const [subjectFilter, setSubjectFilter] = useState("");  
-  const router = useRouter();
 
   useEffect(() => {
     async function loadTeachers() {
@@ -48,7 +48,6 @@ export default function TeachersPage() {
   }, []);
 
   useEffect(() => {
-    
     let filtered = teachers;
 
     if (nameFilter) {
@@ -63,10 +62,6 @@ export default function TeachersPage() {
   }, [nameFilter, subjectFilter, teachers]);
 
   const itemsPerRow = 4;
-
-  const handlePhotoClick = (detailsUrl: string) => {
-    router.push(detailsUrl);
-  };
 
   const handleShowMore = () => {
     setVisibleRows((prev) => prev + 2);
@@ -99,37 +94,25 @@ export default function TeachersPage() {
         />
       </div>
 
-      
-      <div
-        className="grid grid-cols-4 gap-6"
-        style={{
-          gridTemplateColumns: "repeat(4, 1fr)",
-        }}
-      >
+      <div className="grid grid-cols-4 gap-6">
         {teachersToShow.map((teacher) => (
-          <div
-            key={teacher.id}
-            onClick={() => handlePhotoClick(teacher.detailsUrl)}
-            className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300"
-          >
-            <img
-              src={teacher.photo}
-              alt={teacher.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <p>
-                <strong>Name:</strong> {teacher.name}
-              </p>
-              <p>
-                <strong>Subject:</strong> {teacher.subject}
-              </p>
-            </div>
+          <div key={teacher.id} className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300">
+            <Link href={`/teacher/${teacher.id}`}> {/* Link to dynamic teacher details page */}
+              <img src={teacher.photo} alt={teacher.name} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <p>
+                  <strong>Name:</strong> {teacher.name}
+                </p>
+                <p>
+                  <strong>Subject:</strong> {teacher.subject}
+                </p>
+              </div>
+            </Link>
           </div>
         ))}
       </div>
 
-      
+      {/* Show more teachers if needed */}
       {!showAll && visibleRows * itemsPerRow < filteredTeachers.length && (
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <button
@@ -140,8 +123,8 @@ export default function TeachersPage() {
           </button>
         </div>
       )}
-
       <Footer />
     </div>
   );
 }
+
