@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "../../components/footer";
 import Girl from "../../assets/girl.jpeg";
+import Boy from "../../assets/boy.jpeg";
 
 interface Teacher {
   id: number;
@@ -15,16 +16,16 @@ interface Teacher {
 
 async function fetchTeachers(): Promise<Teacher[]> {
   return [
-    { id: 1, name: "John Doe", subject: "Math", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/1" },
-    { id: 2, name: "Jane Smith", subject: "Science", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/2" },
-    { id: 3, name: "Alice Johnson", subject: "English", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/3" },
-    { id: 4, name: "Robert Brown", subject: "History", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/4" },
-    { id: 5, name: "Emily Davis", subject: "Art", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/5" },
-    { id: 6, name: "David Lee", subject: "Geography", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/6" },
-    { id: 7, name: "Sarah Williams", subject: "Physics", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/7" },
-    { id: 8, name: "Mark Thompson", subject: "Chemistry", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/8" },
-    { id: 9, name: "Sophia Turner", subject: "Biology", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/9" },
-    { id: 10, name: "Daniel Scott", subject: "Computer Science", photo: "https://via.placeholder.com/150", detailsUrl: "/teacher/10" },
+    { id: 1, name: "John Doe", subject: "Math", photo: Girl.src, detailsUrl: "/teacher/1" },
+    { id: 2, name: "Jane Smith", subject: "Science", photo: Boy.src, detailsUrl: "/teacher/2" },
+    { id: 3, name: "Alice Johnson", subject: "English", photo: Girl.src, detailsUrl: "/teacher/3" },
+    { id: 4, name: "Robert Brown", subject: "History", photo: Boy.src, detailsUrl: "/teacher/4" },
+    { id: 5, name: "Emily Davis", subject: "Art", photo: Girl.src, detailsUrl: "/teacher/5" },
+    { id: 6, name: "David Lee", subject: "Geography", photo: Boy.src, detailsUrl: "/teacher/6" },
+    { id: 7, name: "Sarah Williams", subject: "Physics", photo: Girl.src, detailsUrl: "/teacher/7" },
+    { id: 8, name: "Mark Thompson", subject: "Chemistry", photo: Boy.src, detailsUrl: "/teacher/8" },
+    { id: 9, name: "Sophia Turner", subject: "Biology", photo: Girl.src, detailsUrl: "/teacher/9" },
+    { id: 10, name: "Daniel Scott", subject: "Computer Science", photo: Boy.src, detailsUrl: "/teacher/10" },
   ];
 }
 

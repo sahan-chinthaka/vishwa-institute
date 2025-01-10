@@ -1,4 +1,5 @@
 import Footer from "@/components/footer"; 
+import Class from "../assets/class.png"
 
 export default function Home() {
   return (
@@ -22,7 +23,7 @@ export default function Home() {
         </div>
         {/* Image on the right */}
         <div className="ml-8">
-          <img src="/path/to/your-image.jpg" alt="Image description" className="w-64 h-auto" />
+          <img src= "/assets/class.png" alt="Image description" className="w-64 h-auto" />
         </div>
       </section>
 
