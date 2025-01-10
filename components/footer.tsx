@@ -49,12 +49,15 @@ const Footer = () => {
               </button>
             </form>
             <div className="mt-4">
-              <iframe
-                title="map"
-                className="w-full h-32 rounded-md"
-                src="https://www.google.com/maps/embed/v1/place?q=Belihuloya,Sri+Lanka&key=YOUR_GOOGLE_MAPS_API_KEY"
-                allowFullScreen
-              ></iframe>
+              <h3 className="text-lg font-semibold mb-2">Find Us On The Map</h3>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.982650104286!2d80.69438057348377!3d6.649071721694482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae3f350634e332f%3A0xa3c2c7ea5024b6a!2sVishwa%20Higher%20Education%20Institute!5e0!3m2!1sen!2slk!4v1736525145346!5m2!1sen!2slk"
+                            width="100%" 
+                            height="100"
+                            style={{ border: 0 }}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        ></iframe>
             </div>
           </div>
         </div>
