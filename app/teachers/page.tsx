@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; 
 import Footer from "../../components/footer";
 import Link from "next/link"; 
 import Girl from "../../assets/girl.jpeg";
@@ -34,7 +33,7 @@ export default function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);  
   const [visibleRows, setVisibleRows] = useState(2);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll] = useState(false);
   const [nameFilter, setNameFilter] = useState("");  
   const [subjectFilter, setSubjectFilter] = useState("");  
 
@@ -65,11 +64,6 @@ export default function TeachersPage() {
 
   const handleShowMore = () => {
     setVisibleRows((prev) => prev + 2);
-  };
-
-  const handleSeeAll = () => {
-    setShowAll(true);
-    setVisibleRows(Math.ceil(filteredTeachers.length / itemsPerRow)); 
   };
 
   const teachersToShow = showAll ? filteredTeachers : filteredTeachers.slice(0, visibleRows * itemsPerRow);

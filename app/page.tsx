@@ -1,5 +1,4 @@
-import Footer from "@/components/footer"; 
-import Class from "../assets/class.png"
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
