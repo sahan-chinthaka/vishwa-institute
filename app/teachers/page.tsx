@@ -81,8 +81,8 @@ export default function TeachersPage() {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "20px", /* Space between the filters */
-          flexWrap: "wrap", /* Allow wrapping on smaller screens */
+          gap: "20px", 
+          flexWrap: "wrap", 
         }}
       >
         <input
@@ -91,7 +91,7 @@ export default function TeachersPage() {
           value={nameFilter}
           onChange={(e) => setNameFilter(e.target.value)}
           className="filter-input px-4 py-2 border rounded-md bg-white text-black"
-          style={{ minWidth: "250px" }} /* Minimum width for better alignment */
+          style={{ minWidth: "250px" }} 
         />
         <input
           type="text"
@@ -99,7 +99,7 @@ export default function TeachersPage() {
           value={subjectFilter}
           onChange={(e) => setSubjectFilter(e.target.value)}
           className="filter-input px-4 py-2 border rounded-md bg-white text-black"
-          style={{ minWidth: "250px" }} /* Minimum width for better alignment */
+          style={{ minWidth: "250px" }} 
         />
       </div>
 
