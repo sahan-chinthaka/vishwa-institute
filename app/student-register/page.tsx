@@ -6,8 +6,8 @@ import { useState, FormEvent } from "react";
 
 function StudentRegister() {
 	const [formData, setFormData] = useState({
-		fullName: "",
 		firstName: "",
+		lastName: "",
 		age: "",
 		grade: "",
 		school: "",
@@ -49,8 +49,8 @@ function StudentRegister() {
 		<div className="mx-auto w-full max-w-2xl px-4 py-6">
 			<form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
 				{[
-					{ label: "Full Name", name: "fullName", type: "text" },
 					{ label: "First Name", name: "firstName", type: "text" },
+					{ label: "Last Name", name: "lastName", type: "text" },
 					{ label: "Age", name: "age", type: "number" },
 					{ label: "Grade", name: "grade", type: "number" },
 					{ label: "School", name: "school", type: "text" },

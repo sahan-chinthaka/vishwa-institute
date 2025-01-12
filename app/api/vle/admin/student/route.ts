@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
     const zData = StudentForm.parse(data);
 
     const student = new Student<StudentType>({
-      fullName: zData.fullName,
       firstName: zData.firstName,
+      lastName: zData.lastName,
       age: zData.age,
       grade: zData.grade,
       school: zData.school,

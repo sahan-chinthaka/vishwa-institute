@@ -8,8 +8,8 @@ export const TeacherForm = z.object({
 });
 
 export const StudentForm = z.object({
-	fullName: z.string(),
 	firstName: z.string(),
+	lastName: z.string(),
 	age: z.coerce.number(),
 	grade: z.string(),
 	school: z.string(),
