@@ -1,4 +1,5 @@
 import Footer from "@/components/footer";
+import TextCarousel from "@/components/TextCarousel";
 
 export default function Home() {
   return (
@@ -25,6 +26,9 @@ export default function Home() {
           <img src= "/assets/class.png" alt="Image description" className="w-64 h-auto" />
         </div>
       </section>
+
+      {/* Announcements Section */}
+      <TextCarousel />
 
       {/* Footer */}
       <Footer />
