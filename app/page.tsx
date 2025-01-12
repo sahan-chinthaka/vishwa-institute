@@ -23,7 +23,7 @@ export default function Home() {
         </div>
         {/* Image on the right */}
         <div className="ml-8">
-          <img src="./class.png" alt="Image description" className="w-64 h-auto" />
+          <img src= "/assets/class.png" alt="Image description" className="w-64 h-auto" />
         </div>
       </section>
 
