@@ -19,7 +19,11 @@ function VLEAdminLayout({ children }: { children: React.ReactNode }) {
 				)}
 				onClick={() => setPanelExpanded((a) => !a)}
 			>
-				{panelExpanded ? <ChevronLeftIcon width={24}/> : <ChevronRightIcon width={24}/>}
+				{panelExpanded ? (
+					<ChevronLeftIcon width={24} />
+				) : (
+					<ChevronRightIcon width={24} />
+				)}
 			</div>
 			<div
 				className={cn(
@@ -54,6 +58,17 @@ function VLEAdminLayout({ children }: { children: React.ReactNode }) {
 							)}
 						>
 							Teacher Management
+						</Link>
+					</li>
+					<li>
+						<Link
+							href="/vle/admin/payments"
+							className={cn(
+								pathname.startsWith("/vle/admin/payments") && "bg-gray-900",
+								"inline-block w-full rounded p-2 transition-colors hover:text-gray-100",
+							)}
+						>
+							Payment Management
 						</Link>
 					</li>
 				</ul>
