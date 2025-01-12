@@ -86,8 +86,8 @@ const config: Config = {
     },
   },
   plugins: [
-    require("tailwindcss-animate"), // animation 
-    require("@tailwindcss/typography"), // text
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
     require("@tailwindcss/forms"), 
     require("@tailwindcss/aspect-ratio"), 
   ],
