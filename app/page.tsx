@@ -1,12 +1,14 @@
+'use client'
 import Footer from "@/components/footer";
 import Image from "next/image";
 import TextCarousel from "@/components/TextCarousel";
+import Teachers from "@/components/teachers";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-start justify-start min-h-screen bg-gray-50">
+    <main className="flex flex-col items-start justify-start min-h-screen bg-white mt-[2cm]"> {/* Added mt-[2cm] here */}
       {/* Hero Section */}
-      <section className="flex-1 flex flex-row items-center justify-start text-left p-8 ml-24">
+      <section className="flex-1 flex flex-row items-center justify-start text-left p-8 ml-24 bg-white">
         {/* Text content */}
         <div className="flex flex-col items-start justify-center">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
@@ -30,6 +32,9 @@ export default function Home() {
 
       {/* Announcements Section */}
       <TextCarousel />
+
+      {/* Teachers Section  */}
+      <Teachers />
 
       {/* Footer */}
       <Footer />

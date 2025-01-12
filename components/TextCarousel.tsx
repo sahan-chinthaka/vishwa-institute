@@ -35,6 +35,7 @@ const TextCarousel = () => {
   };
 
   return (
+    
     <div className="w-full max-w-xl mx-auto mt-10">
       <h2 className="text-center text-2xl font-bold mb-4 text-primary-foreground">
         Announcements
