@@ -36,7 +36,7 @@ const NewsPage = () => {
       slug: "Price-Giving",
     },
     {
-		id: 1,
+		id: 4,
 		title: "Price Giving Ceremony of Vishwa Institute",
 		date: "Saturday, 04 January 2025",
 		description: "Celebrate the achievements of students",
@@ -44,7 +44,7 @@ const NewsPage = () => {
 		slug: "Price-Giving",
 	  },
 	  {
-		id: 2,
+		id: 5,
 		title: "Anniversary Celebration of Vishwa Institute",
 		date: "Friday, 03 January 2025",
 		description: "Celebrate the excellence of 20 years of hard work and growth",
@@ -52,7 +52,7 @@ const NewsPage = () => {
 		slug: "Anniversary-Celebration",
 	  },
 	  {
-		id: 3,
+		id: 6,
 		title: "Price Giving Ceremony of Vishwa Institute",
 		date: "Saturday, 04 January 2025",
 		description: "Celebrate the achievements of students",
@@ -65,7 +65,7 @@ const NewsPage = () => {
   ];
 
   const handleShowMore = () => {
-    setVisibleRows(visibleRows + 3); // Show 3 more articles
+    setVisibleRows(visibleRows + 3); 
   };
 
   return (
@@ -77,11 +77,11 @@ const NewsPage = () => {
             className="relative group border rounded-lg shadow-lg overflow-hidden bg-white hover:shadow-xl transition"
           >
             <Image
-              src={article.photo} // Use the correct photo property
+              src={article.photo} 
               alt={article.title}
               className="w-full h-40 object-cover"
-              width={400} // Specify width
-              height={200} // Specify height
+              width={400} 
+              height={200} 
             />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
@@ -91,7 +91,7 @@ const NewsPage = () => {
             <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition">
               <Link
                 href={`/news/${article.slug}`}
-                className="text-white bg-blue-600 px-4 py-2 rounded-lg shadow hover:bg-blue-700"
+                className="text-white bg-green-600 px-4 py-2 rounded-lg shadow hover:bg-green-700"
               >
                 See More
               </Link>
