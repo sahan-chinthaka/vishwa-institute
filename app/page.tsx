@@ -1,5 +1,4 @@
 import Footer from "@/components/footer";
-import Image from "next/image";
 import TextCarousel from "@/components/TextCarousel";
 
 export default function Home() {
