@@ -4,7 +4,6 @@ import About1 from "@/assets/about1.jpg";
 import About2 from "@/assets/about2.jpg";
 import Founder from "@/assets/founder.jpg";
 import Girl from "@/assets/girl.jpeg";
-import Boy from "@/assets/boy.jpeg";
 
 const ContactUs = () => {
   const aboutPhotos = [About1.src, About1.src, About2.src, About2.src];
