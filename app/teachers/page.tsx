@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Footer from "../../components/footer";
-import Link from "next/link"; 
+import Link from "next/link";
 import Girl from "../../assets/girl.jpeg";
 import Boy from "../../assets/boy.jpeg";
 
@@ -31,17 +31,17 @@ async function fetchTeachers(): Promise<Teacher[]> {
 
 export default function TeachersPage() {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
-  const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);  
+  const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);
   const [visibleRows, setVisibleRows] = useState(2);
   const [showAll] = useState(false);
-  const [nameFilter, setNameFilter] = useState("");  
-  const [subjectFilter, setSubjectFilter] = useState("");  
+  const [nameFilter, setNameFilter] = useState("");
+  const [subjectFilter, setSubjectFilter] = useState("");
 
   useEffect(() => {
     async function loadTeachers() {
       const data = await fetchTeachers();
       setTeachers(data);
-      setFilteredTeachers(data);  
+      setFilteredTeachers(data);
     }
     loadTeachers();
   }, []);
@@ -50,11 +50,15 @@ export default function TeachersPage() {
     let filtered = teachers;
 
     if (nameFilter) {
-      filtered = filtered.filter((teacher) => teacher.name.toLowerCase().includes(nameFilter.toLowerCase()));
+      filtered = filtered.filter((teacher) =>
+        teacher.name.toLowerCase().includes(nameFilter.toLowerCase())
+      );
     }
 
     if (subjectFilter) {
-      filtered = filtered.filter((teacher) => teacher.subject.toLowerCase().includes(subjectFilter.toLowerCase()));
+      filtered = filtered.filter((teacher) =>
+        teacher.subject.toLowerCase().includes(subjectFilter.toLowerCase())
+      );
     }
 
     setFilteredTeachers(filtered);
@@ -66,33 +70,51 @@ export default function TeachersPage() {
     setVisibleRows((prev) => prev + 2);
   };
 
-  const teachersToShow = showAll ? filteredTeachers : filteredTeachers.slice(0, visibleRows * itemsPerRow);
+  const teachersToShow = showAll
+    ? filteredTeachers
+    : filteredTeachers.slice(0, visibleRows * itemsPerRow);
 
   return (
     <div style={{ padding: "20px" }}>
-      {/* Filters */}
-      <div className="filters-container" style={{ textAlign: "center", marginBottom: "20px" }}>
+      <div
+        className="filters-container text-center mb-5"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "20px", 
+          flexWrap: "wrap", 
+        }}
+      >
         <input
           type="text"
           placeholder="Filter by name"
           value={nameFilter}
           onChange={(e) => setNameFilter(e.target.value)}
-          className="px-4 py-2 border rounded-md bg-white text-black mr-4"
+          className="filter-input px-4 py-2 border rounded-md bg-white text-black"
+          style={{ minWidth: "250px" }} 
         />
         <input
           type="text"
           placeholder="Filter by subject"
           value={subjectFilter}
           onChange={(e) => setSubjectFilter(e.target.value)}
-          className="px-4 py-2 border rounded-md bg-white text-black"
+          className="filter-input px-4 py-2 border rounded-md bg-white text-black"
+          style={{ minWidth: "250px" }} 
         />
       </div>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {teachersToShow.map((teacher) => (
-          <div key={teacher.id} className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300">
-            <Link href={`/teacher/${teacher.id}`}> {/* Link to dynamic teacher details page */}
-              <img src={teacher.photo} alt={teacher.name} className="w-full h-48 object-cover" />
+          <div
+            key={teacher.id}
+            className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300"
+          >
+            <Link href={`/teacher/${teacher.id}`}>
+              <img
+                src={teacher.photo}
+                alt={teacher.name}
+                className="w-full h-48 object-cover"
+              />
               <div className="p-4">
                 <p>
                   <strong>Name:</strong> {teacher.name}
@@ -106,9 +128,8 @@ export default function TeachersPage() {
         ))}
       </div>
 
-      {/* Show more teachers if needed */}
       {!showAll && visibleRows * itemsPerRow < filteredTeachers.length && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <div className="text-center mt-5">
           <button
             onClick={handleShowMore}
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
@@ -121,4 +142,3 @@ export default function TeachersPage() {
     </div>
   );
 }
-
