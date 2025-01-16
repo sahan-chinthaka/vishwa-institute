@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
+import { AlignCenter } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
