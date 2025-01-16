@@ -8,7 +8,7 @@ function StudentRegister() {
 	const [formData, setFormData] = useState({
 		firstName: "",
 		lastName: "",
-		age: "",
+		birthDate: "",
 		grade: "",
 		school: "",
 		parentName: "",
@@ -28,20 +28,32 @@ function StudentRegister() {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch("/api/vle/admin/student", {
+			const response = await fetch("/api/vle/admin/student/${id}", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(formData),
+				body: JSON.stringify({
+					...formData,
+					grade: Number(formData.grade),
+					birthDate: new Date(formData.birthDate).toISOString(),
+					status: "pending",
+					clerkId: "clerkId",
+				}),
 			});
 
-			if (!response.ok) throw new Error("Failed to register student");
-			console.log(await response.json());
+			const data = await response.json();
+			console.log(data);
+
+			if (!response.ok) {
+				throw new Error(data.error || "Failed to submit");
+			}
+
 			alert("Student registered successfully!");
-		} catch (error) {
-			console.error(error);
-			alert("Failed to register student");
+			// Reset form or redirect
+		} catch (error: any) {
+			console.error("Error:", error);
+			alert(error.message);
 		}
 	};
 
@@ -51,7 +63,7 @@ function StudentRegister() {
 				{[
 					{ label: "First Name", name: "firstName", type: "text" },
 					{ label: "Last Name", name: "lastName", type: "text" },
-					{ label: "Age", name: "age", type: "number" },
+					{ label: "Birthday", name: "birthDate", type: "date" },
 					{ label: "Grade", name: "grade", type: "number" },
 					{ label: "School", name: "school", type: "text" },
 					{ label: "Parent Name", name: "parentName", type: "text" },
