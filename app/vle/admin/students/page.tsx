@@ -22,7 +22,7 @@ interface Student {
 }
 
 export default function AdminStudentManagement() {
-	const [students, setStudents] = useState<Student[]>([]);
+	const [pendingStudents, setStudents] = useState<Student[]>([]);
 	const [approvedStudents, setApprovedStudents] = useState<Student[]>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -87,41 +87,44 @@ export default function AdminStudentManagement() {
 	}
 
 	return (
-		<div className="container mx-auto py-10">
-			<div>
-				<h2 className="mb-4 text-2xl font-bold">Pending Students</h2>
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Name</TableHead>
-							<TableHead>Grade</TableHead>
-							<TableHead>School</TableHead>
-							<TableHead>Status</TableHead>
-							<TableHead>Action</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{students.map((student) => (
-							<TableRow key={student._id}>
-								<TableCell>
-									{student.firstName} {student.lastName}
-								</TableCell>
-								<TableCell>{student.grade}</TableCell>
-								<TableCell>{student.school}</TableCell>
-								<TableCell>{student.status}</TableCell>
-								<TableCell>
-									<Button
-										onClick={() => handleApprove(student._id)}
-										disabled={student.status === "approved"}
-									>
-										Approve
-									</Button>
-								</TableCell>
+		<div className="container mx-auto px-4 py-10">
+			{pendingStudents.length > 0 && (
+				<div>
+					<h2 className="mb-4 text-2xl font-bold">Pending Students</h2>
+					<Table>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Name</TableHead>
+								<TableHead>Grade</TableHead>
+								<TableHead>School</TableHead>
+								<TableHead>Status</TableHead>
+								<TableHead>Action</TableHead>
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</div>
+						</TableHeader>
+						<TableBody>
+							{pendingStudents.map((student) => (
+								<TableRow key={student._id}>
+									<TableCell>
+										{student.firstName} {student.lastName}
+									</TableCell>
+									<TableCell>{student.grade}</TableCell>
+									<TableCell>{student.school}</TableCell>
+									<TableCell>{student.status}</TableCell>
+									<TableCell>
+										<Button
+											onClick={() => handleApprove(student._id)}
+											disabled={student.status === "approved"}
+										>
+											Approve
+										</Button>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</div>
+			)}
+
 			<div>
 				<h2 className="mb-4 text-2xl font-bold">Approved Students</h2>
 				<Table>

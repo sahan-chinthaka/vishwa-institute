@@ -28,7 +28,7 @@ function StudentRegister() {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch("/api/vle/admin/students/${id}", {
+			const response = await fetch("/api/vle/admin/students", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
