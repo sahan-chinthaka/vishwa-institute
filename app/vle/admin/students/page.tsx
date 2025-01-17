@@ -12,6 +12,7 @@ import {
 
 interface Student {
 	_id: string;
+	indexNumber: string;
 	firstName: string;
 	lastName: string;
 	birthDate: string;
@@ -22,6 +23,7 @@ interface Student {
 
 export default function AdminStudentManagement() {
 	const [students, setStudents] = useState<Student[]>([]);
+	const [approvedStudents, setApprovedStudents] = useState<Student[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	const handleApprove = async (studentId: string) => {
@@ -61,6 +63,10 @@ export default function AdminStudentManagement() {
 						(student: Student) => student.status === "pending",
 					);
 					setStudents(pendingStudents);
+					const approvedStudents = data.students.filter(
+						(student: Student) => student.status === "approved",
+					);
+					setApprovedStudents(approvedStudents);
 				}
 			} catch (error: any) {
 				alert(error.message);
@@ -82,37 +88,67 @@ export default function AdminStudentManagement() {
 
 	return (
 		<div className="container mx-auto py-10">
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead>Name</TableHead>
-						<TableHead>Grade</TableHead>
-						<TableHead>School</TableHead>
-						<TableHead>Status</TableHead>
-						<TableHead>Action</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{students.map((student) => (
-						<TableRow key={student._id}>
-							<TableCell>
-								{student.firstName} {student.lastName}
-							</TableCell>
-							<TableCell>{student.grade}</TableCell>
-							<TableCell>{student.school}</TableCell>
-							<TableCell>{student.status}</TableCell>
-							<TableCell>
-								<Button
-									onClick={() => handleApprove(student._id)}
-									disabled={student.status === "approved"}
-								>
-									Approve
-								</Button>
-							</TableCell>
+			<div>
+				<h2 className="mb-4 text-2xl font-bold">Pending Students</h2>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Name</TableHead>
+							<TableHead>Grade</TableHead>
+							<TableHead>School</TableHead>
+							<TableHead>Status</TableHead>
+							<TableHead>Action</TableHead>
 						</TableRow>
-					))}
-				</TableBody>
-			</Table>
+					</TableHeader>
+					<TableBody>
+						{students.map((student) => (
+							<TableRow key={student._id}>
+								<TableCell>
+									{student.firstName} {student.lastName}
+								</TableCell>
+								<TableCell>{student.grade}</TableCell>
+								<TableCell>{student.school}</TableCell>
+								<TableCell>{student.status}</TableCell>
+								<TableCell>
+									<Button
+										onClick={() => handleApprove(student._id)}
+										disabled={student.status === "approved"}
+									>
+										Approve
+									</Button>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
+			<div>
+				<h2 className="mb-4 text-2xl font-bold">Approved Students</h2>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Name</TableHead>
+							<TableHead>Grade</TableHead>
+							<TableHead>School</TableHead>
+							<TableHead>Index Number</TableHead>
+							<TableHead>Status</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody>
+						{approvedStudents.map((student) => (
+							<TableRow key={student._id}>
+								<TableCell>
+									{student.firstName} {student.lastName}
+								</TableCell>
+								<TableCell>{student.grade}</TableCell>
+								<TableCell>{student.school}</TableCell>
+								<TableCell>{student.indexNumber || "Not assigned"}</TableCell>
+								<TableCell>{student.status}</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
 		</div>
 	);
 }
