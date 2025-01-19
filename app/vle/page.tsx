@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Footer from "@/components/footer";
 
 type UserRole = undefined | "student" | "admin" | "teacher";
 
@@ -39,6 +40,7 @@ async function VLEPage() {
 					<Button>Register Here</Button>
 				</Link>
 			</div>
+			<Footer/>
 		</div>
 	);
 }
