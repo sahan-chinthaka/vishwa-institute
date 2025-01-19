@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema({
-  indexNumber: { type: String, required: true, unique: true },
+  indexNumber: { type: String,
+    default: "",
+    index: { unique: false }
+   },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   birthDate: { type: Date, required: true },

@@ -9,7 +9,7 @@ export const TeacherForm = z.object({
 
 export const StudentForm = z.object({
 
-	indexNumber: z.string().default(" "),
+	indexNumber: z.string().default(""),
 	firstName: z.string(),
 	lastName: z.string(),
 	birthDate: z.coerce.date(),

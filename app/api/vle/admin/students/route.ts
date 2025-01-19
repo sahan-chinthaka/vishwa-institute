@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     const zData = StudentForm.parse(data);
 
     const student = new Student({
-      indexNumber: zData.indexNumber,
+      indexNumber: "",
       firstName: zData.firstName,
       lastName: zData.lastName,
       birthDate: zData.birthDate,

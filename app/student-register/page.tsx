@@ -3,9 +3,10 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, FormEvent } from "react";
+import { set } from "mongoose";
 
 function StudentRegister() {
-	const [formData, setFormData] = useState({
+	const initialFormState = {
 		firstName: "",
 		lastName: "",
 		birthDate: "",
@@ -15,7 +16,10 @@ function StudentRegister() {
 		phoneNumber: "",
 		email: "",
 		address: "",
-	});
+	};
+
+	const [formData, setFormData] = useState(initialFormState);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -27,6 +31,8 @@ function StudentRegister() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setIsSubmitting(true);
+
 		try {
 			const response = await fetch("/api/vle/admin/students", {
 				method: "POST",
@@ -50,10 +56,13 @@ function StudentRegister() {
 			}
 
 			alert("Student registered successfully!");
+			setFormData(initialFormState);
 			// Reset form or redirect
 		} catch (error: any) {
 			console.error("Error:", error);
 			alert(error.message);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
