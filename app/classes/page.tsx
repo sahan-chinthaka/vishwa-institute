@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Footer from "../../components/footer";
 import ClassImage from "../../assets/class.png"; // Placeholder image
 
 interface Class {
@@ -39,6 +38,8 @@ async function fetchClasses(): Promise<Class[]> {
 export default function ClassesPage() {
   const [classes, setClasses] = useState<Class[]>([]);
   const [filteredClasses, setFilteredClasses] = useState<Class[]>([]);
+  const [visibleClasses, setVisibleClasses] = useState<number>(8); // Default to showing 2 rows (4 classes per row)
+
   const [nameFilter, setNameFilter] = useState("");
   const [gradeFilter, setGradeFilter] = useState("");
 
@@ -68,6 +69,10 @@ export default function ClassesPage() {
 
     setFilteredClasses(filtered);
   }, [nameFilter, gradeFilter, classes]);
+
+  const handleSeeMore = () => {
+    setVisibleClasses((prev) => prev + 8); // Show 2 more rows
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -99,7 +104,7 @@ export default function ClassesPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredClasses.map((classItem) => (
+        {filteredClasses.slice(0, visibleClasses).map((classItem) => (
           <div
             key={classItem.id}
             className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300"
@@ -123,7 +128,16 @@ export default function ClassesPage() {
         ))}
       </div>
 
-      <Footer />
+      {visibleClasses < filteredClasses.length && (
+        <div className="text-center mt-5">
+          <button
+            onClick={handleSeeMore}
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+          >
+            See More
+          </button>
+        </div>
+      )}
     </div>
   );
 }
