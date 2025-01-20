@@ -3,19 +3,23 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, FormEvent } from "react";
+import { set } from "mongoose";
 
 function StudentRegister() {
-	const [formData, setFormData] = useState({
+	const initialFormState = {
 		firstName: "",
 		lastName: "",
-		age: "",
+		birthDate: "",
 		grade: "",
 		school: "",
 		parentName: "",
 		phoneNumber: "",
 		email: "",
 		address: "",
-	});
+	};
+
+	const [formData, setFormData] = useState(initialFormState);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -27,21 +31,38 @@ function StudentRegister() {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setIsSubmitting(true);
+
 		try {
-			const response = await fetch("/api/vle/admin/student", {
+			const response = await fetch("/api/vle/admin/students", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(formData),
+				body: JSON.stringify({
+					...formData,
+					grade: Number(formData.grade),
+					birthDate: new Date(formData.birthDate).toISOString(),
+					status: "pending",
+					clerkId: "clerkId",
+				}),
 			});
 
-			if (!response.ok) throw new Error("Failed to register student");
-			console.log(await response.json());
+			const data = await response.json();
+			console.log(data);
+
+			if (!response.ok) {
+				throw new Error(data.error || "Failed to submit");
+			}
+
 			alert("Student registered successfully!");
-		} catch (error) {
-			console.error(error);
-			alert("Failed to register student");
+			setFormData(initialFormState);
+			// Reset form or redirect
+		} catch (error: any) {
+			console.error("Error:", error);
+			alert(error.message);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
@@ -51,7 +72,7 @@ function StudentRegister() {
 				{[
 					{ label: "First Name", name: "firstName", type: "text" },
 					{ label: "Last Name", name: "lastName", type: "text" },
-					{ label: "Age", name: "age", type: "number" },
+					{ label: "Birthday", name: "birthDate", type: "date" },
 					{ label: "Grade", name: "grade", type: "number" },
 					{ label: "School", name: "school", type: "text" },
 					{ label: "Parent Name", name: "parentName", type: "text" },
