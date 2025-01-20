@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Footer from "@/components/footer";
 import ClassImage from "@/assets/class.png"; // Placeholder image
 
 interface ClassDetails {
@@ -208,8 +207,6 @@ export default function ClassDetailsPage({ params }: { params: { classId: string
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
