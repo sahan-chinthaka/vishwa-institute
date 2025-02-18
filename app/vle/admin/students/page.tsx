@@ -22,7 +22,7 @@ interface Student {
 }
 
 export default function AdminStudentManagement() {
-	const [pendingStudents, setStudents] = useState<Student[]>([]);
+	const [students, setStudents] = useState<Student[]>([]);
 	const [approvedStudents, setApprovedStudents] = useState<Student[]>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -41,43 +41,59 @@ export default function AdminStudentManagement() {
 			const data = await response.json();
 
 			if (data.success) {
-				// Refresh students list
 				setStudents((prevStudents) =>
 					prevStudents.filter((student) => student._id !== studentId),
 				);
+				fetchStudents();
 			}
 		} catch (error) {
 			console.error("Error approving student:", error);
 		}
 	};
 
-	useEffect(() => {
-		const fetchStudents = async () => {
-			try {
-				setLoading(true);
-				const response = await fetch("/api/vle/admin/students");
-				const data = await response.json();
+	const handleDelete = async (studentId: string) => {
+		try {
+			const response = await fetch(`/api/vle/admin/students/${studentId}`, {
+				method: "DELETE",
+			});
 
-				if (data.success) {
-					const pendingStudents = data.students.filter(
-						(student: Student) => student.status === "pending",
-					);
-					setStudents(pendingStudents);
-					const approvedStudents = data.students.filter(
-						(student: Student) => student.status === "approved",
-					);
-					setApprovedStudents(approvedStudents);
-				}
-			} catch (error: any) {
-				alert(error.message);
-			} finally {
-				setLoading(false);
+			if (response.ok) {
+				setApprovedStudents((prevStudents) =>
+					prevStudents.filter((student) => student._id !== studentId),
+				);
 			}
-		};
+		} catch (error) {
+			console.error("Error deleting student:", error);
+		}
+	};
 
+	const fetchStudents = async () => {
+		try {
+			setLoading(true);
+			const response = await fetch("/api/vle/admin/students");
+			const data = await response.json();
+
+			if (data.success) {
+				const pendingStudents = data.students.filter(
+					(student: Student) => student.status === "pending",
+				);
+				setStudents(pendingStudents);
+				const approvedStudents = data.students.filter(
+					(student: Student) => student.status === "approved",
+				);
+				setApprovedStudents(approvedStudents);
+			}
+		} catch (error: any) {
+			alert(error.message);
+		} finally {
+			setLoading(false);
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		fetchStudents();
 	}, []);
-
 	if (loading) {
 		return (
 			<div className="flex min-h-screen items-center justify-center">
@@ -88,7 +104,8 @@ export default function AdminStudentManagement() {
 
 	return (
 		<div className="container mx-auto px-4 py-10">
-			{pendingStudents.length > 0 && (
+			{students.filter((student) => student.status === "pending").length >
+				0 && (
 				<div>
 					<h2 className="mb-4 text-2xl font-bold">Pending Students</h2>
 					<Table>
@@ -102,24 +119,26 @@ export default function AdminStudentManagement() {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{pendingStudents.map((student) => (
-								<TableRow key={student._id}>
-									<TableCell>
-										{student.firstName} {student.lastName}
-									</TableCell>
-									<TableCell>{student.grade}</TableCell>
-									<TableCell>{student.school}</TableCell>
-									<TableCell>{student.status}</TableCell>
-									<TableCell>
-										<Button
-											onClick={() => handleApprove(student._id)}
-											disabled={student.status === "approved"}
-										>
-											Approve
-										</Button>
-									</TableCell>
-								</TableRow>
-							))}
+							{students
+								.filter((student) => student.status === "pending")
+								.map((student) => (
+									<TableRow key={student._id}>
+										<TableCell>
+											{student.firstName} {student.lastName}
+										</TableCell>
+										<TableCell>{student.grade}</TableCell>
+										<TableCell>{student.school}</TableCell>
+										<TableCell>{student.status}</TableCell>
+										<TableCell>
+											<Button
+												onClick={() => handleApprove(student._id)}
+												disabled={student.status === "approved"}
+											>
+												Approve
+											</Button>
+										</TableCell>
+									</TableRow>
+								))}
 						</TableBody>
 					</Table>
 				</div>
@@ -135,6 +154,7 @@ export default function AdminStudentManagement() {
 							<TableHead>School</TableHead>
 							<TableHead>Index Number</TableHead>
 							<TableHead>Status</TableHead>
+							<TableHead>Action</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -147,6 +167,11 @@ export default function AdminStudentManagement() {
 								<TableCell>{student.school}</TableCell>
 								<TableCell>{student.indexNumber || "Not assigned"}</TableCell>
 								<TableCell>{student.status}</TableCell>
+								<TableCell>
+									<Button onClick={() => handleDelete(student._id)}>
+										Delete
+									</Button>
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

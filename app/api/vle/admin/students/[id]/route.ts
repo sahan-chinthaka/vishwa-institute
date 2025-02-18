@@ -17,7 +17,7 @@ export async function GET(
       );
     }
 
-    const { id } = await params; // Await the params promise
+    const { id } = await params; 
 
     await connectMongo();
     const student = await Student.findById(id);
@@ -51,7 +51,7 @@ export async function PUT(
       );
     }
 
-    const { id } = await params; // Await the params promise
+    const { id } = await params; 
 
     await connectMongo();
     const data = await request.json();
@@ -99,7 +99,7 @@ export async function DELETE(
       );
     }
 
-    const { id } = await params; // Await the params promise
+    const { id } = await params; 
 
     await connectMongo();
     const deletedStudent = await Student.findByIdAndDelete(id);
