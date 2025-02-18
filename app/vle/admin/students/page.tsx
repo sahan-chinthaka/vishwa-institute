@@ -9,6 +9,7 @@ import {
 	TableBody,
 	TableCell,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 interface Student {
 	_id: string;
@@ -34,8 +35,8 @@ export default function AdminStudentManagement() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					action: "approve",
 					status: "approved",
+					action: "approve",
 				}),
 			});
 
@@ -87,7 +88,6 @@ export default function AdminStudentManagement() {
 		} catch (error: any) {
 			alert(error.message);
 		} finally {
-			setLoading(false);
 			setLoading(false);
 		}
 	};
@@ -169,9 +169,14 @@ export default function AdminStudentManagement() {
 								<TableCell>{student.indexNumber || "Not assigned"}</TableCell>
 								<TableCell>{student.status}</TableCell>
 								<TableCell>
-									<Button onClick={() => handleDelete(student._id)}>
-										Delete
-									</Button>
+									<div className="flex gap-2">
+										<Link href={`/vle/admin/students/${student._id}/edit`}>
+											<Button>Update</Button>
+										</Link>
+										<Button onClick={() => handleDelete(student._id)}>
+											Delete
+										</Button>
+									</div>
 								</TableCell>
 							</TableRow>
 						))}
