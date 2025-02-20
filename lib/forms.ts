@@ -6,3 +6,22 @@ export const TeacherForm = z.object({
 	education: z.string().trim().optional(),
 	clerkId: z.string(),
 });
+
+export const StudentForm = z.object({
+
+	indexNumber: z.string().default(""),
+	firstName: z.string(),
+	lastName: z.string(),
+	birthDate: z.coerce.date(),
+	grade: z.number(),
+	school: z.string(),
+	parentName: z.string(),
+	phoneNumber: z.string(),
+	email: z.string(),
+	address: z.string(),
+	status: z.string().default("pending"),
+	clerkId: z.string(),
+
+	});
+
+  

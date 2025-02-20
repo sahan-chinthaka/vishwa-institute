@@ -3,6 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Footer from "@/components/footer";
 
 type UserRole = undefined | "student" | "admin" | "teacher";
 
@@ -25,6 +26,7 @@ async function VLEPage() {
 	if (role == "admin") return redirect("/vle/admin");
 	else if (role == "student") return redirect("/vle/student");
 	else if (role == "teacher") return redirect("/vle/teacher");
+	//take a conditional approach to render the page. Check with mongoose if the user is a student or not
 
 	return (
 		<div className="flex justify-center">
@@ -38,6 +40,7 @@ async function VLEPage() {
 					<Button>Register Here</Button>
 				</Link>
 			</div>
+			<Footer/>
 		</div>
 	);
 }
