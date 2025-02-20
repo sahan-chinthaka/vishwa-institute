@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import Girl from "@/assets/girl.jpeg";
 import Footer from "@/components/footer";
+import { useParams } from "next/navigation";
 
-export default function TeacherDetails({ params }: { params: { id: string } }) {
+export default function TeacherDetails() {
+  const params = useParams<{id: string}>();
   const teacherId = params.id;
 
   // Simulated data fetch (replace with actual API calls)
@@ -33,10 +35,6 @@ export default function TeacherDetails({ params }: { params: { id: string } }) {
 
   const teacher = teachers.find((t) => t.id === parseInt(teacherId));
 
-  if (!teacher) {
-    return <div>Teacher not found!</div>;
-  }
-
   const [isMobile, setIsMobile] = useState(false);
 
   // Detect screen size and set mobile flag
@@ -56,6 +54,10 @@ export default function TeacherDetails({ params }: { params: { id: string } }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (!teacher) {
+    return <div>Teacher not found!</div>;
+  }
 
   return (
     <div style={{ padding: "20px" }}>

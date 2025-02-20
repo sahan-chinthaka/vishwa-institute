@@ -7,7 +7,7 @@ import Mathematics from "@/assets/mathematics.jpg";
 import Science from "@/assets/science.jpeg";
 import English from "@/assets/english.png";
 
-const TeacherClassInfo = ({ teacherId }: { teacherId: string }) => {
+const TeacherClassInfo = () => {
   const [classData, setClassData] = useState<any[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showAllClasses, setShowAllClasses] = useState(false);
@@ -22,6 +22,8 @@ const TeacherClassInfo = ({ teacherId }: { teacherId: string }) => {
     { className: "Mathematics", grade: "Grade 10", image: Mathematics.src },
     { className: "Science", grade: "Grade 9", image: Science.src },
   ];
+
+  const teacherId = 1;
 
   useEffect(() => {
     logWithTimestamp("Fetching teacher's class data...");

@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; 
 import Footer from "@/components/footer";
 
-interface PageProps {}
 
-const ClassPage: React.FC<PageProps> = () => {
+const ClassPage: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const [activeTab, setActiveTab] = useState("class"); 
   const { className } = useParams(); 

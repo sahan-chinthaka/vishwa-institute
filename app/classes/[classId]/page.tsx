@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import ClassImage from "@/assets/class.png"; // Placeholder image
+import { useParams } from "next/navigation";
 
 interface ClassDetails {
   id: number;
@@ -163,17 +163,18 @@ async function fetchClassDetails(classId: string): Promise<ClassDetails> {
   return classes.find((classItem) => classItem.id === parseInt(classId))!;
 }
 
-export default function ClassDetailsPage({ params }: { params: { classId: string } }) {
-  const { classId } = params;
+export default function ClassDetailsPage() {
+  const params = useParams<{classId: string}>();
+  
   const [classDetails, setClassDetails] = useState<ClassDetails | null>(null);
 
   useEffect(() => {
     async function loadClassDetails() {
-      const data = await fetchClassDetails(classId);
+      const data = await fetchClassDetails(params.classId);
       setClassDetails(data);
     }
     loadClassDetails();
-  }, [classId]);
+  }, [params.classId]);
 
   if (!classDetails) {
     return <div>Class not found!</div>;
