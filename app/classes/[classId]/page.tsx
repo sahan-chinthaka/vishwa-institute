@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Footer from "@/components/footer";
 import ClassImage from "@/assets/class.png"; // Placeholder image
 import { useParams } from "next/navigation";
 
@@ -209,8 +208,6 @@ export default function ClassDetailsPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }
