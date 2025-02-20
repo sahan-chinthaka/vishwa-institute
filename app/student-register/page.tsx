@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, FormEvent } from "react";
-import { set } from "mongoose";
 
 function StudentRegister() {
 	const initialFormState = {
@@ -20,6 +19,8 @@ function StudentRegister() {
 
 	const [formData, setFormData] = useState(initialFormState);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	console.log(isSubmitting);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
