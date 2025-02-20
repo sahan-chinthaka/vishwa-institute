@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ClassImage from "@/assets/class.png"; // Placeholder image
+import ClassImage from "@/assets/class.jpg"; // Placeholder image
 import { useParams } from "next/navigation";
 
 interface ClassDetails {

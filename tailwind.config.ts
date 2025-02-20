@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"], // Enables dark mode support
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,25 +16,21 @@ const config: Config = {
           DEFAULT: "rgba(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
           green: {
-            50: "#f0fdf4", // Light green for backgrounds
-            600: "#16a34a", // Green for buttons and highlights
-            700: "#15803d", // Dark green for hover states
+            50: "#f0fdf4",
+            600: "#16a34a",
+            700: "#15803d",
           },
           gray: {
-            50: "#f9fafb", // Lightest gray
-            100: "#f3f4f6", // Lighter gray
-            300: "#d1d5db", // Border gray
-            500: "#6b7280", // Mid-gray for text
-            700: "#374151", // Dark gray for headings
+            50: "#f9fafb",
+            100: "#f3f4f6",
+            300: "#d1d5db",
+            500: "#6b7280",
+            700: "#374151",
           },
         },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -64,7 +60,7 @@ const config: Config = {
         },
       },
       spacing: {
-        72: "18rem", // Extra spacing utilities
+        72: "18rem",
         84: "21rem",
         96: "24rem",
       },
@@ -72,14 +68,14 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        xl: "1rem", // Extra large radius
+        xl: "1rem",
       },
       boxShadow: {
-        card: "0 4px 6px rgba(0, 0, 0, 0.1)", // Card shadow 
-        "card-hover": "0 6px 10px rgba(0, 0, 0, 0.15)", //  hover states
+        card: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        "card-hover": "0 6px 10px rgba(0, 0, 0, 0.15)",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"], 
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
         serif: ["Merriweather", "serif"],
         mono: ["Fira Code", "monospace"],
       },
@@ -88,8 +84,8 @@ const config: Config = {
   plugins: [
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"), 
-    require("@tailwindcss/aspect-ratio"), 
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
   ],
 };
 

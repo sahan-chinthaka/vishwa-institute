@@ -11,34 +11,34 @@ const TextCarousel = () => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
     },
     {
-      id: 2, 
+      id: 2,
       title: "Why do we use it?",
       description:
         "It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. Lorem Ipsum is used because it provides a natural distribution of letters.",
     },
     {
-      id: 3, 
+      id: 3,
       title: "Where can I get some?",
       description:
         "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.",
     },
   ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0); // Ensure type is number
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    setCurrentIndex((prevIndex) => (prevIndex !== null ? (prevIndex + 1) % slides.length : 0));
   };
 
   const handlePrev = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
+      (prevIndex) => (prevIndex !== null ? (prevIndex - 1 + slides.length) % slides.length : slides.length - 1)
     );
   };
 
   return (
-    <div className="w-full max-w-xl mx-auto mt-10">
-      <h2 className="text-center text-2xl font-bold mb-4 text-primary-foreground">
+    <div className="w-full max-w-4xl mx-auto mt-10 px-4 sm:px-6 md:px-8">
+      <h2 className="text-center text-3xl font-bold mb-4 text-black">
         Announcements
       </h2>
       <div className="relative bg-card p-6 shadow-md rounded-md">
@@ -62,11 +62,11 @@ const TextCarousel = () => {
         </button>
       </div>
 
-      {/* Dods */}
+      {/* Dots */}
       <div className="flex justify-center mt-4 space-x-2">
         {slides.map((slide) => (
           <span
-            key={slide.id} // better using unique id for lides - ask from sahan
+            key={slide.id}
             className={`w-3 h-3 rounded-full transition-all ${
               slide.id === slides[currentIndex].id
                 ? "bg-primary-green-600"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import ClassImage from "../../assets/class.png"; // Placeholder image
+import ClassImage from "@/assets/class.jpg"; // Placeholder image
 
 interface Class {
   id: number;
