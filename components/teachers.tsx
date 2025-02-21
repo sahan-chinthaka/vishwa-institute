@@ -10,17 +10,17 @@ interface Teacher {
 
 const teachers: Teacher[] = [
   {
-    name: "Uresha Dulashan",
+    name: "Mr.Akila Viraj",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus.",
     image: "/uresha.jpg",
   },
   {
-    name: "John Doe",
+    name: "Mr.Nimal Perera",
     description: "Experienced teacher with a passion for teaching science and technology.",
     image: "/john_doe.jpg",
   },
   {
-    name: "Jane Doe",
+    name: "Mr.Ajith Fernando",
     description: "Skilled in teaching mathematics and problem-solving techniques.",
     image: "/jane_doe.jpg",
   },
