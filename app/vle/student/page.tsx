@@ -7,7 +7,7 @@ import Science from "@/assets/science.jpeg";
 import Mathematics from "@/assets/mathematics.jpg";
 import Footer from "@/components/footer";
 
-const StudentClassInfo = ({ studentId }: { studentId: string }) => {
+const StudentClassInfo = () => {
   const [studentData, setStudentData] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [showAllClasses, setShowAllClasses] = useState(false);
@@ -86,6 +86,8 @@ const StudentClassInfo = ({ studentId }: { studentId: string }) => {
         image: English.src,
       },
   ];
+
+  const studentId = 1;
 
   useEffect(() => {
     logWithTimestamp("Fetching student data...");
