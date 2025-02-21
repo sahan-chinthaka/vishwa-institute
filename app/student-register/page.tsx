@@ -3,7 +3,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, FormEvent } from "react";
-import { set } from "mongoose";
 
 function StudentRegister() {
 	const initialFormState = {
@@ -57,7 +56,6 @@ function StudentRegister() {
 
 			alert("Student registered successfully!");
 			setFormData(initialFormState);
-			// Reset form or redirect
 		} catch (error: any) {
 			console.error("Error:", error);
 			alert(error.message);
@@ -92,12 +90,17 @@ function StudentRegister() {
 							onChange={handleChange}
 							placeholder={field.label}
 							className="w-full"
+							disabled={isSubmitting}
 						/>
 					</div>
 				))}
 
-				<Button type="submit" className="mt-6 w-full sm:w-auto">
-					Register Student
+				<Button
+					type="submit"
+					className="mt-6 w-full sm:w-auto"
+					disabled={isSubmitting}
+				>
+					{isSubmitting ? "Registering..." : "Register Student"}
 				</Button>
 			</form>
 		</div>

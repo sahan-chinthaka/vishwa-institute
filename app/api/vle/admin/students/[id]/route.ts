@@ -40,7 +40,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -93,6 +93,7 @@ export async function PUT(
     );
   }
 }
+
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
