@@ -12,17 +12,17 @@ const classes: Class[] = [
   {
     name: "Mathematics",
     description: "Comprehensive classes covering algebra, geometry, and calculus.",
-    image: "/mathematics.jpg",
+    image: "/books.jpg",
   },
   {
     name: "Science",
     description: "Explore the world of physics, chemistry, and biology.",
-    image: "/science.jpg",
+    image: "/books.jpg",
   },
   {
     name: "English Literature",
     description: "Dive into classical and modern literature with expert guidance.",
-    image: "/english_literature.jpg",
+    image: "/books.jpg",
   },
 ];
 
