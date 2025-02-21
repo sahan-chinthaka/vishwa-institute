@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -18,11 +18,9 @@ interface Student {
 	address: string;
 }
 
-export default function EditStudentPage({
-	params,
-}: {
-	params: { id: string };
-}) {
+export default function Page() {
+	const params = useParams();
+	const { id } = params as { id: string };
 	const [student, setStudent] = useState<Student | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -32,7 +30,7 @@ export default function EditStudentPage({
 		const fetchStudent = async () => {
 			try {
 				setLoading(true);
-				const response = await fetch(`/api/vle/admin/students/${params.id}`);
+				const response = await fetch(`/api/vle/admin/students/${id}`);
 				if (!response.ok) {
 					throw new Error("Failed to fetch student");
 				}
@@ -45,8 +43,8 @@ export default function EditStudentPage({
 			}
 		};
 
-		fetchStudent();
-	}, [params.id]);
+		if (id) fetchStudent();
+	}, [id]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -63,7 +61,7 @@ export default function EditStudentPage({
 		e.preventDefault();
 		try {
 			setLoading(true);
-			const response = await fetch(`/api/vle/admin/students/${params.id}`, {
+			const response = await fetch(`/api/vle/admin/students/${id}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -110,9 +108,8 @@ export default function EditStudentPage({
 						type="text"
 						id="firstName"
 						name="firstName"
-						value={student.firstName}
+						value={student.firstName || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -126,9 +123,8 @@ export default function EditStudentPage({
 						type="text"
 						id="lastName"
 						name="lastName"
-						value={student.lastName}
+						value={student.lastName || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -142,9 +138,8 @@ export default function EditStudentPage({
 						type="date"
 						id="birthDate"
 						name="birthDate"
-						value={student.birthDate}
+						value={student.birthDate || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -158,9 +153,8 @@ export default function EditStudentPage({
 						type="number"
 						id="grade"
 						name="grade"
-						value={student.grade}
+						value={student.grade || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -174,9 +168,8 @@ export default function EditStudentPage({
 						type="text"
 						id="school"
 						name="school"
-						value={student.school}
+						value={student.school || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -190,9 +183,8 @@ export default function EditStudentPage({
 						type="text"
 						id="parentName"
 						name="parentName"
-						value={student.parentName}
+						value={student.parentName || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -206,9 +198,8 @@ export default function EditStudentPage({
 						type="tel"
 						id="phoneNumber"
 						name="phoneNumber"
-						value={student.phoneNumber}
+						value={student.phoneNumber || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -222,9 +213,8 @@ export default function EditStudentPage({
 						type="email"
 						id="email"
 						name="email"
-						value={student.email}
+						value={student.email || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<div className="mb-4">
@@ -238,14 +228,13 @@ export default function EditStudentPage({
 						type="text"
 						id="address"
 						name="address"
-						value={student.address}
+						value={student.address || ""}
 						onChange={handleChange}
-						className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
 					/>
 				</div>
 				<Button
 					type="submit"
-					className="focus:shadow-outline rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
+					className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
 				>
 					Update Student
 				</Button>
