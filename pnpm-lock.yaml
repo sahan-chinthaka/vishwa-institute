@@ -11,6 +11,19 @@ overrides:
 importers:
 
   .:
+    dependencies:lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+overrides:
+  '@types/react': 19.0.1
+  '@types/react-dom': 19.0.1
+
+importers:
+
+  .:
     dependencies:
       '@clerk/nextjs':
         specifier: ^6.8.0
