@@ -12,6 +12,8 @@ import { TeacherType } from "@/lib/types";
 import Teacher from "@/models/teacher";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 async function AdminTeacherManagement() {
 	await connectMongo();
 
