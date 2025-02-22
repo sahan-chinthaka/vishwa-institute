@@ -37,9 +37,10 @@ export default function Home() {
           </a>
         </div>
         {/* Image on the right */}
-        <div className="md:w-1/2 w-full">
-          <Image src={classImage} alt="Image description" className="w-full h-auto" />
-        </div>
+        <div className="md:w-2/3 w-full">
+  <Image src={classImage} alt="Image description" className="w-full h-[500px] object-cover" />
+</div>
+
       </section>
 
       {/* Announcements Section */}
