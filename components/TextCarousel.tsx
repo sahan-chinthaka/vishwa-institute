@@ -6,21 +6,21 @@ const TextCarousel = () => {
   const slides = [
     {
       id: 1, // Added unique 'id'
-      title: "What is Lorem Ipsum?",
+      title: "2025/2026 A/L Biology classes have begun !",
       description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "New tuition classes have begun! Join us now for expert guidance, interactive lessons, and exam-focused learning to achieve your academic goals.",
     },
     {
       id: 2,
-      title: "Why do we use it?",
+      title: "Boost Your Grades with Expert Tutoring!",
       description:
-        "It is a long-established fact that a reader will be distracted by the readable content of a page when looking at its layout. Lorem Ipsum is used because it provides a natural distribution of letters.",
+        "Our latest tuition sessions are now open for enrollment! Join us for focused learning, exam preparation, and a supportive study environment to help you excel in your subjects.",
     },
     {
       id: 3,
-      title: "Where can I get some?",
+      title: "Enroll Now..New Science Classes Open!",
       description:
-        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.",
+        "Exciting new tuition classes have started! Don't miss the chance to learn from expert tutors with personalized guidance and interactive lessons. Secure your spot today",
     },
   ];
 
