@@ -1,12 +1,36 @@
-import { ClassType } from "@/lib/types";
-import mongoose from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
-const classSchema = new mongoose.Schema<ClassType>({
-  name: String,
-  teacherName: String,
-  grade: Number,
-  clerkId: String,
+interface ClassType {
+  name: string;
+  description: string;
+  grade: string;
+  teacherRef: mongoose.Schema.Types.ObjectId;
+  classId: mongoose.Schema.Types.ObjectId;
+  clerkId: string;
+  email: string;
+}
+
+const classSchema = new Schema<ClassType>({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  grade: { type: String, required: true },
+  teacherRef: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher",
+    required: false,
+  },
+  email: { type: String, required: true },
+  classId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    unique: true,
+    default: () => new mongoose.Types.ObjectId(),
+  },
+  clerkId: {
+    type: String,
+    required: true,
+  },
 });
 
-const Class = mongoose.models.Class || mongoose.model("Class", classSchema);	
+const Class = models.Class || model<ClassType>("Class", classSchema);
 export default Class;

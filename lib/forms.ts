@@ -26,7 +26,8 @@ export const StudentForm = z.object({
 
   export const ClassForm = z.object({
 	name: z.string(),
-	teacherName: z.string(),
-	grade: z.number(),
-	clerkId: z.string(),
+	description: z.string(),
+	grade: z.string(),
+	email: z.string(),
+	
 	});
