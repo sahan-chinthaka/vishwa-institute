@@ -15,8 +15,9 @@ const classSchema = new Schema<ClassType>({
   description: { type: String, required: true },
   grade: { type: String, required: true },
   teacherRef: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Teacher",
+	type: String,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "Teacher",
     required: false,
   },
   email: { type: String, required: true },
