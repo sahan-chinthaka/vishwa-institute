@@ -1,168 +1,69 @@
-"use client";
-import { useEffect, useState } from "react";
-import { logWithTimestamp, fetchData } from "@/lib/utils";
-import Link from 'next/link';
-import English from "@/assets/english.png";
-import Science from "@/assets/science.jpeg";
-import Mathematics from "@/assets/mathematics.jpg";
 import Footer from "@/components/footer";
+import connectMongo from "@/lib/mongo";
+import EnrolledStudent from "@/models/enrolled-students";
+import Student from "@/models/student";
+import { currentUser } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-const StudentClassInfo = () => {
-  const [studentData, setStudentData] = useState<any>(null);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const [showAllClasses, setShowAllClasses] = useState(false);
+export const dynamic = "force-dynamic";
 
-  const dummyClasses = [
-    {
-      className: "Mathematics",
-      grade: "Grade 10",
-      teacher: "Siripala",
-      image: Mathematics.src,
-    },
-    {
-      className: "Science",
-      grade: "Grade 9",
-      teacher: "Kumari",
-      image: Science.src,
-    },
-    {
-      className: "English",
-      grade: "Grade 8",
-      teacher: "Fernando",
-      image: English.src,
-    },
-    {
-        className: "Mathematics",
-        grade: "Grade 10",
-        teacher: "Siripala",
-        image: Mathematics.src,
-      },
-      {
-        className: "Science",
-        grade: "Grade 9",
-        teacher: "Kumari",
-        image: Science.src,
-      },
-      {
-        className: "English",
-        grade: "Grade 8",
-        teacher: "Fernando",
-        image: English.src,
-      },
-      {
-        className: "Mathematics",
-        grade: "Grade 10",
-        teacher: "Siripala",
-        image: Mathematics.src,
-      },
-      {
-        className: "Science",
-        grade: "Grade 9",
-        teacher: "Kumari",
-        image: Science.src,
-      },
-      {
-        className: "English",
-        grade: "Grade 8",
-        teacher: "Fernando",
-        image: English.src,
-      },
-      {
-        className: "Mathematics",
-        grade: "Grade 10",
-        teacher: "Siripala",
-        image: Mathematics.src,
-      },
-      {
-        className: "Science",
-        grade: "Grade 9",
-        teacher: "Kumari",
-        image: Science.src,
-      },
-      {
-        className: "English",
-        grade: "Grade 8",
-        teacher: "Fernando",
-        image: English.src,
-      },
-  ];
+const StudentClassInfo = async () => {
+	await connectMongo();
 
-  const studentId = 1;
+	const user = await currentUser();
 
-  useEffect(() => {
-    logWithTimestamp("Fetching student data...");
+	const headersList = await headers();
 
-    fetchData(`/api/vle/student?studentId=${studentId}`)
-      .then((data) => {
-        if (data.message) {
-          setErrorMessage(data.message);
-        } else {
-          setStudentData(data);
-        }
-      })
-      .catch((error) => {
-        logWithTimestamp("Error: " + error.message);
-        setErrorMessage("You are not assigned to any class");
-      });
-  }, [studentId]);
+	const host = headersList.get("host");
+	const protocol = headersList.get("x-forwarded-proto") || "http";
+	const currentURL = `${protocol}://${host}`;
 
-  return (
-    <div>
-      {errorMessage ? (
-        <div>
-          <div className="text-red-500 mb-4">{errorMessage}</div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {dummyClasses
-              .slice(0, showAllClasses ? dummyClasses.length : 4)
-              .map((dummyClass, index) => (
-                <Link
-                  key={index}
-                  href={`/vle/student/${dummyClass.className.toLowerCase()}`} // Redirecting to the class-specific page
-                  passHref
-                >
-                  <div
-                    className="border border-gray-300 rounded-lg overflow-hidden cursor-pointer bg-white transform hover:scale-105 hover:shadow-lg hover:bg-green-100 transition-all duration-300"
-                  >
-                    {/* Upper Part: Class Photo */}
-                    <div className="h-40 overflow-hidden">
-                      <img
-                        src={dummyClass.image}
-                        alt={dummyClass.className}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+	if (!user) {
+		return redirect(
+			"/sign-in?redirect_url=" + encodeURIComponent(currentURL + "/vle"),
+		);
+	}
 
-                    {/* Lower Part: Class Info */}
-                    <div className="p-4 bg-green-100">
-                      <h2 className="text-lg font-bold">{dummyClass.className}</h2>
-                      <p className="text-sm">Grade: {dummyClass.grade}</p>
-                      <p className="text-sm">Teacher: {dummyClass.teacher}</p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-          {/* See More Button */}
-          <div className="mt-6 text-center">
-            <button
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              onClick={() => setShowAllClasses(!showAllClasses)}
-            >
-              {showAllClasses ? "Show Less" : "See More"}
-            </button>
-          </div>
-        </div>
-      ) : (
-        studentData && (
-          <div>
-            <h1>{studentData.name}</h1>
-            <p>Assigned to class: {studentData.classAssignment}</p>
-          </div>
-        )
-      )}
-      <Footer />
-    </div>
-  );
+	const user_id = user.id;
+	const userRef = await Student.findOne({
+		clerkId: user_id,
+	});
+
+	const enrolledData = await EnrolledStudent.find({
+		studentRef: userRef,
+	}).populate("classRef");
+
+	return (
+		<div className="min-h-screen bg-gray-50">
+			<div className="container mx-auto px-4 py-8">
+				<h1 className="mb-6 text-2xl font-bold">My Classes</h1>
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+					{enrolledData.map((enrollment) => (
+						<Link
+							key={enrollment._id}
+							href={`/vle/student/${enrollment.classRef._id}`}
+						>
+							<div className="cursor-pointer rounded-lg bg-white p-4 shadow transition-shadow hover:shadow-md">
+								<h2 className="text-xl font-semibold">
+									{enrollment.classRef.name}
+								</h2>
+								<p className="text-gray-600">
+									{enrollment.classRef.description}
+								</p>
+								<p className="mt-2 text-sm text-gray-500">
+									Enrolled:{" "}
+									{new Date(enrollment.enrolledDate).toLocaleDateString()}
+								</p>
+							</div>
+						</Link>
+					))}
+				</div>
+			</div>
+			<Footer />
+		</div>
+	);
 };
 
 export default StudentClassInfo;
