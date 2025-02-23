@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-const ClassPage = async ({ params }: { params: { class_id: string } }) => {
+const ClassPage = async ({ params }: { params: Promise<{ class_id: string }> }) => {
 	await connectMongo();
 	const user = await currentUser();
 
@@ -17,7 +17,7 @@ const ClassPage = async ({ params }: { params: { class_id: string } }) => {
 		return redirect("/sign-in");
 	}
 
-	const classData = await Class.findById(params.class_id);
+	const classData = await Class.findById((await params).class_id);
 
 	if (!classData) {
 		return <div>Class not found</div>;
@@ -42,7 +42,7 @@ const ClassPage = async ({ params }: { params: { class_id: string } }) => {
 							<AttendanceTab />
 						</TabsContent>
 						<TabsContent value="payments" className="mt-6">
-							<PaymentsTab classId={params.class_id} studentId={user.id} />
+							<PaymentsTab classId={(await params).class_id} studentId={user.id} />
 						</TabsContent>
 					</Tabs>
 				</div>

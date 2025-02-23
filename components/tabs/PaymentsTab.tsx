@@ -2,13 +2,6 @@ import Class from "@/models/class";
 import Payment from "@/models/payment";
 import Student from "@/models/student";
 
-interface PaymentType {
-	id: string;
-	amount: number;
-	month: string;
-	year: string;
-}
-
 const PaymentsTab = async ({
 	classId,
 	studentId,
