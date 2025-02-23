@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
 		await client.users.updateUserMetadata(zData.clerkId, {
 			publicMetadata: {
-				teacher: true,
+				teacher: "true",
 			},
 		});
 

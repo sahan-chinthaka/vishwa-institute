@@ -1,6 +1,43 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export default clerkMiddleware();
+const isTeacherRoute = createRouteMatcher([
+	"/vle/teacher(.*)",
+	"/api/vle/teacher(.*)",
+]);
+
+const isAdminRoute = createRouteMatcher([
+	"/vle/admin(.*)",
+	"/api/vle/admin(.*)",
+]);
+
+const isStudentRoute = createRouteMatcher([
+	"/vle/student(.*)",
+	"/api/vle/student(.*)",
+]);
+
+export default clerkMiddleware(async (auth, req) => {
+	const { userId, sessionClaims, redirectToSignIn } = await auth();
+
+	if (isAdminRoute(req)) {
+		if (!userId) return redirectToSignIn();
+		if (sessionClaims.metadata.admin != "true") {
+			return NextResponse.redirect("/vle");
+		}
+	} else if (isTeacherRoute(req)) {
+		if (!userId) return redirectToSignIn();
+		if (sessionClaims.metadata.teacher != "true") {
+			return NextResponse.redirect("/vle");
+		}
+	} else if (isStudentRoute(req)) {
+		if (!userId) return redirectToSignIn();
+		if (sessionClaims.metadata.student != "true") {
+			return NextResponse.redirect("/vle");
+		}
+	}
+
+	return NextResponse.next();
+});
 
 export const config = {
 	matcher: [
