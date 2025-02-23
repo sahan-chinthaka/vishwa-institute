@@ -20,6 +20,13 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 interface ClassType {
 	_id: string;
@@ -28,6 +35,12 @@ interface ClassType {
 	grade: string;
 	email: string;
 	clerkId: string;
+}
+
+interface StudentType {
+	_id: string;
+	firstName: string;
+	lastName: string;
 }
 
 export default function AdminClassesPage() {
@@ -41,6 +54,9 @@ export default function AdminClassesPage() {
 		grade: "",
 		email: "",
 	});
+	const [students, setStudents] = useState<StudentType[]>([]);
+	const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
+	const [selectedStudents, setSelectedStudents] = useState<string[]>([]);
 
 	const fetchClasses = async () => {
 		try {
@@ -57,6 +73,21 @@ export default function AdminClassesPage() {
 			setError(error.message || "Failed to fetch classes");
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	const fetchStudents = async () => {
+		try {
+			const response = await fetch("/api/vle/admin/students");
+			const data = await response.json();
+
+			if (data.success) {
+				setStudents(data.students);
+			} else {
+				setError(data.error || "Failed to fetch students");
+			}
+		} catch (error: any) {
+			setError(error.message || "Failed to fetch students");
 		}
 	};
 
@@ -94,14 +125,47 @@ export default function AdminClassesPage() {
 		}
 	};
 
+	const handleAssignStudents = async () => {
+		try {
+			if (!selectedClassId) {
+				setError("Please select a class");
+				return;
+			}
+
+			const response = await fetch(
+				`/api/vle/admin/classes/${selectedClassId}/students`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ studentIds: selectedStudents }),
+				},
+			);
+
+			const data = await response.json();
+
+			if (data.success) {
+				alert("Students assigned successfully!");
+				setSelectedClassId(null);
+				setSelectedStudents([]);
+			} else {
+				setError(data.error || "Failed to assign students");
+			}
+		} catch (error: any) {
+			setError(error.message || "Failed to assign students");
+		}
+	};
+
 	useEffect(() => {
 		fetchClasses();
+		fetchStudents();
 	}, []);
 
 	if (loading) {
 		return (
 			<div className="flex min-h-screen items-center justify-center">
-				<p className="text-lg font-medium">Loading classes...</p>
+				<p className="text-lg font-medium">Loading...</p>
 			</div>
 		);
 	}
@@ -193,6 +257,7 @@ export default function AdminClassesPage() {
 						<TableHead>Description</TableHead>
 						<TableHead>Grade</TableHead>
 						<TableHead>Email</TableHead>
+						<TableHead>Actions</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -202,10 +267,49 @@ export default function AdminClassesPage() {
 							<TableCell>{cls.description}</TableCell>
 							<TableCell>{cls.grade}</TableCell>
 							<TableCell>{cls.email}</TableCell>
+							<TableCell>
+								<Button
+									variant="secondary"
+									onClick={() => setSelectedClassId(cls._id)}
+								>
+									Assign Students
+								</Button>
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
 			</Table>
+
+			{selectedClassId && (
+				<div className="mt-4">
+					<h2 className="text-lg font-bold">Assign Students to Class</h2>
+					<Select
+						onValueChange={(value) => {
+							setSelectedStudents((prev) => {
+								if (prev.includes(value)) {
+									return prev.filter((v) => v !== value);
+								} else {
+									return [...prev, value];
+								}
+							});
+						}}
+					>
+						<SelectTrigger className="w-[180px]">
+							<SelectValue placeholder="Select students" />
+						</SelectTrigger>
+						<SelectContent>
+							{students.map((student) => (
+								<SelectItem key={student._id} value={student._id}>
+									{student.firstName} {student.lastName}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+					<Button className="mt-2" onClick={handleAssignStudents}>
+						Assign Selected Students
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 }
