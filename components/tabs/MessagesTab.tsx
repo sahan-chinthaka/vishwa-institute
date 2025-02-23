@@ -12,7 +12,6 @@ interface Message {
 
 const MessagesTab = async ({
 	classId,
-	studentId,
 }: {
 	classId: string;
 	studentId: string;
