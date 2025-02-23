@@ -3,7 +3,6 @@ import { currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import Footer from "@/components/footer";
 import connectMongo from "@/lib/mongo";
 import Student from "@/models/student";
 
@@ -47,7 +46,6 @@ async function VLEPage() {
 							<Button>Register Here</Button>
 						</Link>
 					</div>
-					<Footer />
 				</div>
 			);
 		} else if (student.status === "pending") {
@@ -56,7 +54,6 @@ async function VLEPage() {
 					<div className="mx-2 my-10 w-full max-w-[600px] rounded border p-10 shadow-lg">
 						<p className="text-lg font-bold">Your application is pending.</p>
 					</div>
-					<Footer />
 				</div>
 			);
 		} else if (student.status === "approved") {
@@ -76,7 +73,6 @@ async function VLEPage() {
 					<Button>Register Here</Button>
 				</Link>
 			</div>
-			<Footer />
 		</div>
 	);
 }
