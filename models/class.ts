@@ -8,6 +8,7 @@ interface ClassType {
   classId: mongoose.Schema.Types.ObjectId;
   clerkId: string;
   email: string;
+  students: mongoose.Schema.Types.ObjectId[];
 }
 
 const classSchema = new Schema<ClassType>({
@@ -15,22 +16,18 @@ const classSchema = new Schema<ClassType>({
   description: { type: String, required: true },
   grade: { type: String, required: true },
   teacherRef: {
-	type: String,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "Teacher",
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher",
     required: false,
   },
-  email: { type: String, required: true },
+  // email: { type: String, required: true },
   classId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     unique: true,
     default: () => new mongoose.Types.ObjectId(),
   },
-  clerkId: {
-    type: String,
-    required: true,
-  },
+
 });
 
 const Class = models.Class || model<ClassType>("Class", classSchema);
