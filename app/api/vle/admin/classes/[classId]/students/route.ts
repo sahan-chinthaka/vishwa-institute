@@ -8,10 +8,10 @@ import { NextRequest } from "next/server";
 
 export async function PUT(
   request: NextRequest,
-  context: { params: Promise<{ classId: string }> } // params is now a Promise
+  context: { params: Promise<{ classId: string }> } 
 ) {
   try {
-    const { classId } = await context.params; // Await the params
+    const { classId } = await context.params; 
 
     if (!classId) {
       return NextResponse.json(
