@@ -3,109 +3,91 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Footer from "@/components/footer";
+import axios from "axios";
 
 interface Message {
-  sender: string;
-  message: string;
-  dateReceived: Date;
+	message: string;
+	date: Date;
 }
 
 const TeacherClassPage: React.FC = () => {
-  const [isClient, setIsClient] = useState(false);
-  const [classMessages, setClassMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState("");
-  const { className } = useParams();
+	const [classMessages, setClassMessages] = useState<Message[]>([]);
+	const [newMessage, setNewMessage] = useState("");
+	const { className } = useParams();
 
-  useEffect(() => {
-    setIsClient(true);
-    // Initialize with dummy data or fetch from an API
-    setClassMessages([
-      {
-        sender: "Teacher",
-        message: "Welcome to the class chat.",
-        dateReceived: new Date("2025-01-11T14:30:00"),
-      },
-      {
-        sender: "Teacher",
-        message: "Don't forget to complete your assignments!",
-        dateReceived: new Date("2025-01-10T10:00:00"),
-      },
-    ]);
-  }, []);
+	function refreshMessages() {
+		axios.get(`/api/vle/teacher/?class_id=${className}`).then((res) => {
+			setClassMessages(res.data.messages);
+		});
+	}
 
-  const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const message: Message = {
-        sender: "Teacher",
-        message: newMessage,
-        dateReceived: new Date(),
-      };
-      setClassMessages((prevMessages) => [...prevMessages, message]);
-      setNewMessage("");
-    }
-  };
+	useEffect(() => {
+		refreshMessages();
+	}, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
+	const handleSendMessage = () => {
+		if (newMessage.trim()) {
+			axios
+				.post(`/api/vle/teacher/?class_id=${className}`, {
+					message: newMessage.trim(),
+					date: new Date(),
+				})
+				.then((res) => {
+					console.log(res.data);
+					refreshMessages();
+				});
+			setNewMessage("");
+		}
+	};
 
-  if (!isClient || !className) {
-    return null;
-  }
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			handleSendMessage();
+		}
+	};
 
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">
-        Welcome to{" "}
-        {typeof className === "string"
-          ? className.charAt(0).toUpperCase() + className.slice(1)
-          : className.join(" ").charAt(0).toUpperCase() +
-            className.join(" ").slice(1)}{" "}
-        Class
-      </h1>
+	return (
+		<div className="container mx-auto p-4">
+			<h1 className="text-2xl font-bold">Welcome to Class</h1>
 
-      <p className="mt-2 text-lg">Manage your class messages here.</p>
+			<p className="mt-2 text-lg">Manage your class messages here.</p>
 
-      <div className="mt-6 bg-green-100 p-4 w-full max-w-[900px] h-[500px] flex flex-col justify-between items-center mx-auto">
-        {/* Message List */}
-        <div className="overflow-y-auto w-full flex-grow space-y-4 mb-4">
-          {classMessages.map((msg, idx) => (
-            <div key={idx} className="flex justify-end">
-              <div className="max-w-[90%] p-3 rounded-lg bg-green-200 text-gray-800 shadow-md">
-                <p>{msg.message}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {msg.dateReceived.toLocaleString()}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+			<div className="mx-auto mt-6 flex h-[500px] w-full max-w-[900px] flex-col items-center justify-between bg-green-100 p-4">
+				{/* Message List */}
+				<div className="mb-4 w-full flex-grow space-y-4 overflow-y-auto">
+					{classMessages.map((msg, idx) => (
+						<div key={idx} className="flex justify-end">
+							<div className="max-w-[90%] rounded-lg bg-green-200 p-3 text-gray-800 shadow-md">
+								<p>{msg.message}</p>
+								<p className="mt-1 text-xs text-gray-500">{msg.date + ""}</p>
+							</div>
+						</div>
+					))}
+				</div>
 
-        {/* Input Area */}
-        <div className="w-full flex flex-col items-stretch">
-          <textarea
-            className="w-full p-2 border rounded-md"
-            rows={3}
-            placeholder="Type your message here..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <button
-            className="mt-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 self-end"
-            onClick={handleSendMessage}
-          >
-            Send Message
-          </button>
-        </div>
-      </div>
+				{/* Input Area */}
+				<div className="flex w-full flex-col items-stretch">
+					<textarea
+						className="w-full rounded-md border p-2"
+						rows={3}
+						placeholder="Type your message here..."
+						value={newMessage}
+						onChange={(e) => setNewMessage(e.target.value)}
+						onKeyDown={handleKeyDown}
+					/>
+					<button
+						className="mt-2 self-end rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+						onClick={handleSendMessage}
+					>
+						Send Message
+					</button>
+				</div>
+			</div>
 
-      <Footer />
-    </div>
-  );
+			<Footer />
+		</div>
+	);
 };
 
 export default TeacherClassPage;
