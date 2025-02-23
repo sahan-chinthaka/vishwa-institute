@@ -114,7 +114,7 @@ export default function AdminClassesPage() {
 			if (data.success) {
 				fetchClasses();
 				setOpen(false);
-				setNewClass({ name: "", description: "", grade: "" }); // Reset form
+				setNewClass({ name: "", description: "", grade: "" });
 			} else {
 				setError(data.error || "Failed to create class");
 			}
