@@ -10,6 +10,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { TeacherForm } from "@/lib/forms";
 import { TeacherType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +28,10 @@ function NewTeacherForm({ data }: { data: SearchItem }) {
 			lastName: data.lastName,
 			clerkId: data.id,
 			education: "",
+			subjects: "",
+			description: "",
+			phoneNumber: "",
+			email: data.emailAddresses[0].emailAddress ?? "",
 		},
 	});
 	const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -88,6 +93,61 @@ function NewTeacherForm({ data }: { data: SearchItem }) {
 								<FormLabel>Education:</FormLabel>
 								<FormControl>
 									<Input placeholder="Bsc Hons in Physics" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="subjects"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Subjects:</FormLabel>
+								<FormControl>
+									<Input placeholder="Arts, Mathematics" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="phoneNumber"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Phone Number:</FormLabel>
+								<FormControl>
+									<Input placeholder="Phone Number" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email:</FormLabel>
+								<FormControl>
+									<Input placeholder="someone@test.com" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="description"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Description:</FormLabel>
+								<FormControl>
+									<Textarea
+										placeholder="High skilled in teaching..."
+										{...field}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

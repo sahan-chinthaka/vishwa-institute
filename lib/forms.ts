@@ -5,10 +5,13 @@ export const TeacherForm = z.object({
 	lastName: z.string().trim().optional(),
 	education: z.string().trim().optional(),
 	clerkId: z.string(),
+	subjects: z.string().optional(),
+	phoneNumber: z.string().optional(),
+	description: z.string().optional(),
+	email: z.string().email().optional(),
 });
 
 export const StudentForm = z.object({
-
 	indexNumber: z.string().default(""),
 	firstName: z.string(),
 	lastName: z.string(),
