@@ -10,6 +10,9 @@ export interface SearchItem {
 	imageUrl: string;
 	firstName: string;
 	lastName: string;
+	emailAddresses: {
+		emailAddress: string;
+	}[];
 }
 
 function AdminNewTeacherPage() {
@@ -30,6 +33,7 @@ function AdminNewTeacherPage() {
 			)
 			.then((res) => {
 				if (res.data.done) {
+					console.log(res.data.users);
 					setSearchList(res.data.users);
 				}
 			})

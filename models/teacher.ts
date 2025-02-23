@@ -15,6 +15,7 @@ const teacherSchema = new mongoose.Schema<TeacherType>({
 	subjects: String,
 	phoneNumber: String,
 	description: String,
+	email: String,
 });
 
 const Teacher =

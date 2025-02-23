@@ -8,6 +8,7 @@ export const TeacherForm = z.object({
 	subjects: z.string().optional(),
 	phoneNumber: z.string().optional(),
 	description: z.string().optional(),
+	email: z.string().email().optional(),
 });
 
 export const StudentForm = z.object({
