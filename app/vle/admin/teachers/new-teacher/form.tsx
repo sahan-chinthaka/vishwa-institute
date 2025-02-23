@@ -10,6 +10,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { TeacherForm } from "@/lib/forms";
 import { TeacherType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SearchItem } from "./page";
-import { Textarea } from "@/components/ui/textarea";
 
 function NewTeacherForm({ data }: { data: SearchItem }) {
 	const form = useForm<TeacherType>({
@@ -31,6 +31,7 @@ function NewTeacherForm({ data }: { data: SearchItem }) {
 			subjects: "",
 			description: "",
 			phoneNumber: "",
+			email: data.emailAddresses[0].emailAddress ?? "",
 		},
 	});
 	const [submitDisabled, setSubmitDisabled] = useState(false);
@@ -118,6 +119,19 @@ function NewTeacherForm({ data }: { data: SearchItem }) {
 								<FormLabel>Phone Number:</FormLabel>
 								<FormControl>
 									<Input placeholder="Phone Number" {...field} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Email:</FormLabel>
+								<FormControl>
+									<Input placeholder="someone@test.com" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

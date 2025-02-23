@@ -2,6 +2,7 @@ import { TeacherForm } from "@/lib/forms";
 import connectMongo from "@/lib/mongo";
 import { TeacherType } from "@/lib/types";
 import Teacher from "@/models/teacher";
+import { clerkClient } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -11,7 +12,13 @@ export async function POST(req: NextRequest) {
 		const data = await req.json();
 		const zData = TeacherForm.parse(data);
 
-		console.log(zData)
+		const client = await clerkClient();
+
+		await client.users.updateUserMetadata(zData.clerkId, {
+			publicMetadata: {
+				teacher: true,
+			},
+		});
 
 		const teacher = new Teacher<TeacherType>({
 			firstName: zData.firstName,
@@ -21,6 +28,7 @@ export async function POST(req: NextRequest) {
 			subjects: zData.subjects,
 			phoneNumber: zData.phoneNumber,
 			description: zData.description,
+			email: zData.email,
 		});
 
 		await teacher.save();
