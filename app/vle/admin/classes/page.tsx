@@ -33,7 +33,6 @@ interface ClassType {
 	name: string;
 	description: string;
 	grade: string;
-	email: string;
 	clerkId: string;
 }
 
@@ -52,7 +51,6 @@ export default function AdminClassesPage() {
 		name: "",
 		description: "",
 		grade: "",
-		email: "",
 	});
 	const [students, setStudents] = useState<StudentType[]>([]);
 	const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
@@ -116,7 +114,7 @@ export default function AdminClassesPage() {
 			if (data.success) {
 				fetchClasses();
 				setOpen(false);
-				setNewClass({ name: "", description: "", grade: "", email: "" }); // Reset form
+				setNewClass({ name: "", description: "", grade: "" }); // Reset form
 			} else {
 				setError(data.error || "Failed to create class");
 			}
@@ -231,19 +229,6 @@ export default function AdminClassesPage() {
 									className="col-span-3"
 								/>
 							</div>
-							<div className="grid grid-cols-4 items-center gap-4">
-								<Label htmlFor="email" className="text-right">
-									Email
-								</Label>
-								<Input
-									type="email"
-									id="email"
-									name="email"
-									value={newClass.email}
-									onChange={handleInputChange}
-									className="col-span-3"
-								/>
-							</div>
 						</div>
 						<Button onClick={handleCreateClass}>Create Class</Button>
 					</DialogContent>
@@ -256,7 +241,6 @@ export default function AdminClassesPage() {
 						<TableHead>Name</TableHead>
 						<TableHead>Description</TableHead>
 						<TableHead>Grade</TableHead>
-						<TableHead>Email</TableHead>
 						<TableHead>Actions</TableHead>
 					</TableRow>
 				</TableHeader>
@@ -266,7 +250,6 @@ export default function AdminClassesPage() {
 							<TableCell>{cls.name}</TableCell>
 							<TableCell>{cls.description}</TableCell>
 							<TableCell>{cls.grade}</TableCell>
-							<TableCell>{cls.email}</TableCell>
 							<TableCell>
 								<Button
 									variant="secondary"
