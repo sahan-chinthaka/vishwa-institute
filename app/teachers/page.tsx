@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Footer from "../../components/footer";
-import Link from "next/link";
-import Girl from "../../assets/girl.jpeg";
-import Boy from "../../assets/boy.jpeg";
 import axios from "axios";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import Girl from "../../assets/girl.jpeg";
+import Footer from "../../components/footer";
 
 interface Teacher {
 	id: number;
