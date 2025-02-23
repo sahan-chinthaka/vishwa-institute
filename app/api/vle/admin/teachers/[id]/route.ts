@@ -70,6 +70,9 @@ export async function PUT(
 				firstName: data.firstName,
 				lastName: data.lastName,
 				education: data.education,
+				subjects: data.subjects,
+				description: data.description,
+				phoneNumber: data.phoneNumber,
 			},
 		);
 
@@ -77,4 +80,4 @@ export async function PUT(
 	} catch (error: any) {
 		return NextResponse.json({ done: false, error: error.message });
 	}
-} 
+}

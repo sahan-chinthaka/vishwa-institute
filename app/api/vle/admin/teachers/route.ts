@@ -11,11 +11,16 @@ export async function POST(req: NextRequest) {
 		const data = await req.json();
 		const zData = TeacherForm.parse(data);
 
+		console.log(zData)
+
 		const teacher = new Teacher<TeacherType>({
 			firstName: zData.firstName,
 			lastName: zData.lastName,
 			education: zData.education,
 			clerkId: zData.clerkId,
+			subjects: zData.subjects,
+			phoneNumber: zData.phoneNumber,
+			description: zData.description,
 		});
 
 		await teacher.save();

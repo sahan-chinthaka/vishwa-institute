@@ -48,6 +48,7 @@ const VLETeacherPage = async () => {
 							</div>
 						</Link>
 					))}
+					{classes.length === 0 && <div>No classes found</div>}
 				</div>
 			</div>
 			<Footer />

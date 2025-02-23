@@ -33,6 +33,7 @@ async function AdminTeacherManagement() {
 						<TableRow>
 							<TableHead>#</TableHead>
 							<TableHead>Teacher Name</TableHead>
+							<TableHead>Subjects</TableHead>
 							<TableHead>Action</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -43,6 +44,7 @@ async function AdminTeacherManagement() {
 								<TableCell>
 									{teacher.firstName} {teacher.lastName}
 								</TableCell>
+								<TableCell>{teacher.subjects}</TableCell>
 								<TableCell>
 									<Link href={`./teachers/${teacher.clerkId}`}>
 										<Button variant="outline">Edit</Button>

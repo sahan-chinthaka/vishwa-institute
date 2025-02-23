@@ -8,6 +8,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { TeacherForm } from "@/lib/forms";
 import { TeacherType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,10 +21,13 @@ function TeacherEditForm({ teacher }: { teacher: TeacherType }) {
 	const form = useForm<TeacherType>({
 		resolver: zodResolver(TeacherForm),
 		defaultValues: {
-			firstName: teacher.firstName,
-			lastName: teacher.lastName,
+			firstName: teacher.firstName ?? "",
+			lastName: teacher.lastName ?? "",
 			clerkId: teacher.clerkId,
-			education: teacher.education,
+			education: teacher.education ?? "",
+			subjects: teacher.subjects ?? "",
+			description: teacher.description ?? "",
+			phoneNumber: teacher.phoneNumber ?? "",
 		},
 	});
 	const router = useRouter();
@@ -84,6 +88,48 @@ function TeacherEditForm({ teacher }: { teacher: TeacherType }) {
 								<Input
 									autoComplete="off"
 									placeholder="Bsc Hons in Physics"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="subjects"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Subjects:</FormLabel>
+							<FormControl>
+								<Input placeholder="Arts, Mathematics" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="phoneNumber"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Phone Number:</FormLabel>
+							<FormControl>
+								<Input placeholder="Phone Number" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="description"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Description:</FormLabel>
+							<FormControl>
+								<Textarea
+									placeholder="High skilled in teaching..."
 									{...field}
 								/>
 							</FormControl>
