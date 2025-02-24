@@ -3,8 +3,10 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 function StudentRegister() {
+	const router = useRouter();
 	const initialFormState = {
 		firstName: "",
 		lastName: "",
@@ -58,6 +60,7 @@ function StudentRegister() {
 
 			alert("Student registered successfully!");
 			setFormData(initialFormState);
+			router.push("/vle");
 		} catch (error: any) {
 			console.error("Error:", error);
 			alert(error.message);
