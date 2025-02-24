@@ -30,11 +30,11 @@ export default function Home() {
             Empowering students with knowledge and resources to thrive in their careers and futures.
           </p>
           <a
-            href="#"
-            className="inline-block px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
-          >
-            Get Started
-          </a>
+  href="https://vishwa-institute.vercel.app/classes"
+  className="inline-block px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
+>
+  Get Started
+</a>
         </div>
         {/* Image on the right */}
         <div className="md:w-2/3 w-full">

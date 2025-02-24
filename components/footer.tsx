@@ -13,7 +13,7 @@ const Footer = () => {
 
         {/* Social Media Links (Follow Us On) */}
         <div className="sm:col-span-1 mt-8 sm:mt-0 md:mt-0">
-          <h3 className="text-lg font-semibold mb-2">Follow Us On</h3>
+          <h4 className="text-lg font-semibold mb-2">Follow Us On</h4>
           <div className="flex justify-center sm:justify-start space-x-4">
             <a href="#" className="text-green-600 hover:text-green-800">
               <i className="fab fa-facebook-f"></i>
