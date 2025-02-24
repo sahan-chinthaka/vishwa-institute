@@ -71,6 +71,17 @@ function VLEAdminLayout({ children }: { children: React.ReactNode }) {
 							Payment Management
 						</Link>
 					</li>
+					<li>
+						<Link
+							href="/vle/admin/classes"
+							className={cn(
+								pathname.startsWith("/vle/admin/classes") && "bg-gray-900",
+								"inline-block w-full rounded p-2 transition-colors hover:text-gray-100",
+							)}
+						>
+							Class Management
+						</Link>
+					</li>
 				</ul>
 			</div>
 			<aside className="h-[calc(100vh-64px)] w-full overflow-auto">
