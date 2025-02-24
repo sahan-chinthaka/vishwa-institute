@@ -24,4 +24,13 @@ export const StudentForm = z.object({
 	address: z.string(),
 	status: z.string().default("pending"),
 	clerkId: z.string(),
-});
+
+	});
+
+  export const ClassForm = z.object({
+	name: z.string(),
+	description: z.string(),
+	grade: z.string(),
+	email: z.string(),
+	
+	});
