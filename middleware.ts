@@ -22,17 +22,17 @@ export default clerkMiddleware(async (auth, req) => {
 	if (isAdminRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.admin != "true") {
-			return NextResponse.redirect("/vle");
+			return NextResponse.redirect("/");
 		}
 	} else if (isTeacherRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.teacher != "true") {
-			return NextResponse.redirect("/vle");
+			return NextResponse.redirect("/");
 		}
 	} else if (isStudentRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.student != "true") {
-			return NextResponse.redirect("/vle");
+			return NextResponse.redirect("/");
 		}
 	}
 
