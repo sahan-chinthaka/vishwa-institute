@@ -16,7 +16,7 @@ export const StudentForm = z.object({
 	firstName: z.string(),
 	lastName: z.string(),
 	birthDate: z.coerce.date(),
-	grade: z.number(),
+	grade: z.coerce.number(),
 	school: z.string(),
 	parentName: z.string(),
 	phoneNumber: z.string(),
