@@ -146,7 +146,7 @@ function ContactUsPage() {
 							Today, Vishwa Institute stands as a proud symbol of educational
 							excellence, with a legacy built on the values of inclusivity,
 							perseverance, and innovation. It continues to inspire generations
-							of students and educators, staying true to its founder's vision of
+							of students and educators, staying true to its founder&apos;s vision of
 							shaping a brighter future through the power of education.
 						</p>
 					</motion.div>

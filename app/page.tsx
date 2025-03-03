@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import Teachers from "@/components/teachers";
 import TextCarousel from "@/components/TextCarousel";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
 	return (
@@ -20,7 +21,7 @@ export default function Home() {
 							their careers and futures.
 						</p>
 						<div className="transition-transform duration-300 hover:scale-105 active:scale-95">
-							<a
+							<Link
 								href="/classes"
 								className="inline-flex items-center rounded-lg bg-green-600 px-8 py-4 font-semibold text-white shadow-lg transition-all hover:bg-green-700 hover:shadow-xl"
 							>
@@ -38,7 +39,7 @@ export default function Home() {
 										d="M9 5l7 7-7 7"
 									/>
 								</svg>
-							</a>
+							</Link>
 						</div>
 					</div>
 					<div className="relative animate-fade-in-right overflow-hidden rounded-2xl shadow-2xl">
