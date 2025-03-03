@@ -8,15 +8,11 @@ import {
 	UserButton,
 	useUser,
 } from "@clerk/nextjs";
-import {
-	Button,
-	Disclosure,
-	DisclosureButton,
-	DisclosurePanel,
-} from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const navigation = [
 	{ name: "Classes", href: "/classes" },
@@ -28,136 +24,162 @@ const navigation = [
 export default function NavBar() {
 	const pathname = usePathname();
 	const user = useUser();
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	return (
-		<Disclosure as="nav" className="bg-gray-800">
-			<div className="mx-auto max-w-7xl px-2 md:px-6 lg:px-8">
-				<div className="relative flex h-16 items-center justify-between">
-					<div className="absolute inset-y-0 left-0 flex items-center md:hidden">
-						{/* Mobile menu button*/}
-						<DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-							<span className="absolute -inset-0.5" />
-							<span className="sr-only">Open main menu</span>
-							<Bars3Icon
-								aria-hidden="true"
-								className="block size-6 group-data-[open]:hidden"
-							/>
-							<XMarkIcon
-								aria-hidden="true"
-								className="hidden size-6 group-data-[open]:block"
-							/>
-						</DisclosureButton>
-					</div>
-					<div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
-						<div className="flex shrink-0 items-center">
+		<nav className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="relative flex h-20 items-center justify-between">
+					{/* Logo */}
+					<Link
+						href="/"
+						className="flex items-center space-x-2 font-mono text-xl font-bold text-green-600 transition-colors hover:text-green-700"
+					>
+						VISHWA
+					</Link>
+
+					{/* Desktop Navigation */}
+					<div className="hidden md:flex md:space-x-1">
+						{navigation.map((item) => (
 							<Link
-								href="/"
-								className="font-mono font-bold text-background transition-colors"
-							>
-								VISHWA
-							</Link>
-						</div>
-						<div className="hidden md:ml-6 md:block">
-							<div className="flex space-x-4">
-								{navigation.map((item) => (
-									<Link
-										key={item.name}
-										href={item.href}
-										aria-current={
-											pathname.startsWith(item.href) ? "page" : undefined
-										}
-										className={cn(
-											pathname.startsWith(item.href)
-												? "bg-gray-900 text-white"
-												: "text-gray-300 hover:bg-gray-700 hover:text-white",
-											"rounded-md px-3 py-2 text-sm font-medium",
-										)}
-									>
-										{item.name}
-									</Link>
-								))}
-								{user.isLoaded && user.isSignedIn && (
-									<Link
-										href={"/vle"}
-										aria-current={
-											pathname.startsWith("/vle") ? "page" : undefined
-										}
-										className={cn(
-											pathname.startsWith("/vle")
-												? "bg-gray-900 text-white"
-												: "text-gray-300 hover:bg-gray-700 hover:text-white",
-											"rounded-md px-3 py-2 text-sm font-medium",
-										)}
-									>
-										VLE
-									</Link>
+								key={item.name}
+								href={item.href}
+								className={cn(
+									"relative px-4 py-2 text-sm font-medium transition-colors",
+									pathname.startsWith(item.href)
+										? "text-green-600"
+										: "text-gray-600 hover:text-green-600",
 								)}
-							</div>
-						</div>
+							>
+								{item.name}
+								{pathname.startsWith(item.href) && (
+									<motion.div
+										layoutId="navbar-active"
+										className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"
+										initial={false}
+									/>
+								)}
+							</Link>
+						))}
+						{user.isLoaded && user.isSignedIn && (
+							<Link
+								href="/vle"
+								className={cn(
+									"relative px-4 py-2 text-sm font-medium transition-colors",
+									pathname.startsWith("/vle")
+										? "text-green-600"
+										: "text-gray-600 hover:text-green-600",
+								)}
+							>
+								VLE
+								{pathname.startsWith("/vle") && (
+									<motion.div
+										layoutId="navbar-active"
+										className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"
+										initial={false}
+									/>
+								)}
+							</Link>
+						)}
 					</div>
-					<div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
+
+					{/* Auth Buttons */}
+					<div className="flex items-center space-x-4">
 						<SignedIn>
 							<button
 								type="button"
-								className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+								className="relative rounded-full p-2 text-gray-600 transition-colors hover:text-green-600"
 							>
-								<span className="absolute -inset-1.5" />
 								<span className="sr-only">View notifications</span>
-								<BellIcon aria-hidden="true" className="size-6" />
+								<div className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-red-500" />
+								<svg
+									className="h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth="1.5"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+									/>
+								</svg>
 							</button>
+							<UserButton
+								appearance={{
+									elements: {
+										avatarBox: "w-10 h-10",
+									},
+								}}
+							/>
 						</SignedIn>
+						<SignedOut>
+							<SignInButton>
+								<motion.button
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									className="rounded-lg bg-green-600 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
+								>
+									Sign In
+								</motion.button>
+							</SignInButton>
+						</SignedOut>
 
-						<div className="relative ml-3 flex justify-center">
-							<SignedOut>
-								<SignInButton>
-									<Button className="rounded bg-primary px-4 py-2 text-sm text-foreground transition-colors data-[active]:bg-green-500 data-[hover]:bg-green-600">
-										Sign In
-									</Button>
-								</SignInButton>
-							</SignedOut>
-							<SignedIn>
-								<UserButton />
-							</SignedIn>
-						</div>
+						{/* Mobile Menu Button */}
+						<button
+							className="rounded-lg p-2 text-gray-600 transition-colors hover:text-green-600 md:hidden"
+							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+						>
+							<Menu className="h-6 w-6" />
+						</button>
 					</div>
 				</div>
 			</div>
 
-			<DisclosurePanel className="md:hidden">
-				<div className="space-y-1 px-2 pb-3 pt-2">
-					{navigation.map((item) => (
-						<DisclosureButton
-							key={item.name}
-							as={Link}
-							href={item.href}
-							aria-current={pathname.startsWith(item.href) ? "page" : undefined}
-							className={cn(
-								pathname.startsWith(item.href)
-									? "bg-gray-900 text-white"
-									: "text-gray-300 hover:bg-gray-700 hover:text-white",
-								"block rounded-md px-3 py-2 text-base font-medium",
+			{/* Mobile Menu */}
+			<AnimatePresence>
+				{isMobileMenuOpen && (
+					<motion.div
+						initial={{ opacity: 0, height: 0 }}
+						animate={{ opacity: 1, height: "auto" }}
+						exit={{ opacity: 0, height: 0 }}
+						className="overflow-hidden border-t border-gray-200 bg-white md:hidden"
+					>
+						<div className="space-y-1 px-4 py-4">
+							{navigation.map((item) => (
+								<Link
+									key={item.name}
+									href={item.href}
+									className={cn(
+										"block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+										pathname.startsWith(item.href)
+											? "bg-green-50 text-green-600"
+											: "text-gray-600 hover:bg-gray-50 hover:text-green-600",
+									)}
+									onClick={() => setIsMobileMenuOpen(false)}
+								>
+									{item.name}
+								</Link>
+							))}
+							{user.isLoaded && user.isSignedIn && (
+								<Link
+									href="/vle"
+									className={cn(
+										"block rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+										pathname.startsWith("/vle")
+											? "bg-green-50 text-green-600"
+											: "text-gray-600 hover:bg-gray-50 hover:text-green-600",
+									)}
+									onClick={() => setIsMobileMenuOpen(false)}
+								>
+									VLE
+								</Link>
 							)}
-						>
-							{item.name}
-						</DisclosureButton>
-					))}
-					{user.isLoaded && user.isSignedIn && (
-						<DisclosureButton
-							as={Link}
-							href={"/vle"}
-							aria-current={pathname.startsWith("/vle") ? "page" : undefined}
-							className={cn(
-								pathname.startsWith("/vle")
-									? "bg-gray-900 text-white"
-									: "text-gray-300 hover:bg-gray-700 hover:text-white",
-								"block rounded-md px-3 py-2 text-base font-medium",
-							)}
-						>
-							VLE
-						</DisclosureButton>
-					)}
-				</div>
-			</DisclosurePanel>
-		</Disclosure>
+						</div>
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</nav>
 	);
 }

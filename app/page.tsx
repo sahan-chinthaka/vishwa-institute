@@ -1,61 +1,76 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import Footer from "@/components/footer";
-import TextCarousel from "@/components/TextCarousel";
-import Teachers from "@/components/teachers";
-import Image from "next/image";
-import classImage from "@/assets/class.jpg"; 
+import classImage from "@/assets/class.jpg";
 import Classes from "@/components/classes";
+import Footer from "@/components/footer";
+import Teachers from "@/components/teachers";
+import TextCarousel from "@/components/TextCarousel";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
-  const [isClient, setIsClient] = useState(false);
+	return (
+		<main className="flex min-h-screen flex-col bg-gradient-to-b from-white to-green-50">
+			{/* Hero Section */}
+			<section className="container mx-auto px-4 py-16 md:py-24">
+				<div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+					<div className="animate-fade-in-left space-y-6">
+						<h1 className="text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
+							We Value Your <span className="text-green-600">Future!</span>
+						</h1>
+						<p className="max-w-xl text-lg text-gray-600 md:text-xl">
+							Empowering students with knowledge and resources to thrive in
+							their careers and futures.
+						</p>
+						<div className="transition-transform duration-300 hover:scale-105 active:scale-95">
+							<Link
+								href="/classes"
+								className="inline-flex items-center rounded-lg bg-green-600 px-8 py-4 font-semibold text-white shadow-lg transition-all hover:bg-green-700 hover:shadow-xl"
+							>
+								Get Started
+								<svg
+									className="ml-2 h-5 w-5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M9 5l7 7-7 7"
+									/>
+								</svg>
+							</Link>
+						</div>
+					</div>
+					<div className="relative animate-fade-in-right overflow-hidden rounded-2xl shadow-2xl">
+						<Image
+							src={classImage || "/placeholder.svg"}
+							alt="Students learning in a modern classroom"
+							className="h-[500px] w-full object-cover"
+							priority
+						/>
+						<div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+					</div>
+				</div>
+			</section>
 
-  useEffect(() => {
-    setIsClient(true); // Will run only on client-side
-  }, []);
+			{/* Announcements Section */}
+			<section className="bg-white py-16">
+				<TextCarousel />
+			</section>
 
-  if (!isClient) {
-    return null; // Prevents SSR mismatch during initial render
-  }
+			{/* Teachers Section */}
+			<section className="bg-green-50 py-16">
+				<Teachers />
+			</section>
 
-  return (
-    <main className="flex flex-col items-start justify-start min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-start text-left p-8 bg-white sm:ml-[1cm] md:ml-[2cm] mb-12">
-        {/* Text content */}
-        <div className="flex flex-col items-start justify-center mb-8 md:mb-0 md:w-1/2 sm:w-full">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">We Value Your Future!</h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl">
-            Empowering students with knowledge and resources to thrive in their careers and futures.
-          </p>
-          <a
-  href="https://vishwa-institute.vercel.app/classes"
-  className="inline-block px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
->
-  Get Started
-</a>
-        </div>
-        {/* Image on the right */}
-        <div className="md:w-2/3 w-full">
-  <Image src={classImage} alt="Image description" className="w-full h-[500px] object-cover" />
-</div>
+			{/* Classes Section */}
+			<section className="bg-white py-16">
+				<Classes />
+			</section>
 
-      </section>
-
-      {/* Announcements Section */}
-      <TextCarousel />
-
-      {/* Teachers Section */}
-      <Teachers />
-
-      {/* Classes Section - pulled up by 3cm */}
-      <div className="mt-[-2cm]">
-        <Classes />
-      </div>
-
-      {/* Footer */}
-      <Footer />
-    </main>
-  );
+			{/* Footer */}
+			<Footer />
+		</main>
+	);
 }
