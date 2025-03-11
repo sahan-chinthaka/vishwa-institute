@@ -18,21 +18,23 @@ const isStudentRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
 	const { userId, sessionClaims, redirectToSignIn } = await auth();
+	const url = req.nextUrl.clone();
+	url.pathname = "/";
 
 	if (isAdminRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.admin != "true") {
-			return NextResponse.redirect("/");
+			return NextResponse.redirect(url);
 		}
 	} else if (isTeacherRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.teacher != "true") {
-			return NextResponse.redirect("/");
+			return NextResponse.redirect(url);
 		}
 	} else if (isStudentRoute(req)) {
 		if (!userId) return redirectToSignIn();
 		if (sessionClaims.metadata.student != "true") {
-			return NextResponse.redirect("/");
+			return NextResponse.redirect(url);
 		}
 	}
 
